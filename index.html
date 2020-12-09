@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<!--[if IE 7]>                  <html class="ie7 no-js" lang="en">     <![endif]-->
+<!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>Community Forest Management (CFM)  Peru</title>
+	<meta name="description" content="CFM MAP Peru">
+
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	
+	<!-- CSS
+	================================================== -->
+	<!-- Base + Vendors CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/fonts/font-awesome/css/all.css">
+
+	<!-- Theme CSS-->
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
+
+	<!-- Head Libs -->
+	<script src="vendor/modernizr.js"></script>
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="vendor/respond.min.js"></script>
+	<![endif]-->
+
+	<!--[if IE]>
+		<link rel="stylesheet" href="css/ie.css">
+	<![endif]-->
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-144x144.png">
+
+	<!-- Leaflet css -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+
+	<!-- Bootstrap-multiselect css -->
+	<link rel="stylesheet" href="vendor/bootstrap-multiselect/css/bootstrap-multiselect.css">
+
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 100%;
+			height: 100vh;
+		}
+
+		/* hack style for bootstrap multiselect */
+		.form-check-label { white-space: normal; }
+		.multiselect-container { width: inherit; }
+
+	</style>
+</head>
+<body>
+	<div class="site-wrapper">
+
+		<!-- Header -->
+		<header class="header header-menu-fullw">
+			<div class="header-main">
+				<div class="container">
+					<!-- Logo -->
+					<div class="logo"></div>
+					<!-- Logo / End -->
+					<button type="button" class="navbar-toggle">
+			        	<i class="fas fa-bars"></i>
+					</button>
+
+			      	<!-- Banner -->
+			      	<div class="head-info">
+			      		<ul class="social-links">
+			      			<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+							<li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+							<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#"><i class="fa fa-rss"></i></a></li>
+						</ul>
+			      </div>
+			      <!-- Banner / End -->
+				</div>
+			</div>
+		</header>
+		<!-- Header / End -->
+
+		<!-- Main -->
+		<div class="main" role="main">
+
+			<!-- Page Heading -->
+			<section class="page-heading">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<H1>Community Forest Management (CFM): Peru</H1>
+						</div>
+						<div class="col-md-6">
+							<nav class="nav-main">
+									<ul data-breakpoint="992" class="flexnav">
+										<li class="active"><a href="index.html">Home</a></li>
+										<li><a href="about.html">About</a></li>
+										<li><a href="about.html#partners">Partners</a></li>
+										<li><a href="contacts.html">Contacts</a></li>
+									</ul>
+							</nav>
+						</div>
+						<!-- Navigation / End -->
+					</div>
+				</div>
+			</section>
+			<!-- Page Heading / End -->
+
+			<!-- Page Content -->
+			<section class="page-content map">
+				<div class="home map">
+					<div class="row ">
+						<div class="col-md-3 side-bar-scroll">
+							<form>
+								<div class="row side-bar-filter">
+									<div class="col-md-12">
+										<input type="button" id="btnfiltermap" value="Filter Map" class="btn btn-primary filter" data-loading-text="Loading...">
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="department">Departement:</label>
+											<select class="form-control" id="department" multiple="multiple"></select>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="province">Province:</label>
+											<select class="form-control" id="province" multiple="multiple"></select>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="federation">Federation :</label>
+											<select class="form-control" id="federation" multiple="multiple"></select>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="native-community">Native Community Name:</label>
+											<select class="form-control" id="native-community" multiple="multiple"></select>
+										</div>
+									</div>
+									<!-- <div class="col-md-12">
+										<div class="form-group">
+											<label for="forestry-permit">Forestry Use Permit:</label>
+											<select class="form-control" id="forestry-permit">
+												<option>Select ...</option>
+												<option>Option A</option>
+												<option>Option B</option>
+												<option>Option C</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="forestry-permit-status">Forestry Use Permit Status</label>
+											<select class="form-control" id="forestry-permit-status">
+												<option>Select ...</option>
+												<option>Option A</option>
+												<option>Option B</option>
+												<option>Option C</option>
+											</select>
+										</div>
+									</div> -->
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="pncb">PNCB affiliation</label>
+											<select class="form-control" id="pncb" multiple="multiple"></select>
+										</div>
+									</div>
+									<!-- <div class="col-md-12">
+										<div class="form-group">
+											<label for="indigenous">Indigenous people</label>
+											<select class="form-control" id="indigenous">
+												<option>Select ...</option>
+												<option>Option A</option>
+												<option>Option B</option>
+												<option>Option C</option>
+											</select>
+										</div>
+									</div> -->
+								</div>
+							</form>
+						</div>
+						<div class="col-md-9">
+							<div id='map'></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Page Content / End -->
+
+			<!-- Footer -->
+			<footer class="footer" id="footer">
+				<div class="footer-copyright">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-md-4">
+								Copyright &copy; 2020  <a href="index.html">Community Forest Management (CFM)  Peru</a> &nbsp;| &nbsp;All Rights Reserved
+							</div>
+							<div class="col-sm-6 col-md-8">
+								<div class="social-links-wrapper">
+									<span class="social-links-txt">Keep in Touch</span>
+									<ul class="social-links social-links__light">
+										<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+										<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+										<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+										<li><a href="#"><i class="fa fa-rss"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- Footer / End -->
+			
+		</div>
+		<!-- Main / End -->
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script> -->
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+	<script src="vendor/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
+	<script src="vendor/randomcolor.js"></script>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	window.HTTP_CONST = { GET: 'GET', PUT: 'PUT', POST: 'POST', PATCH: 'PATCH', DELETE: 'DELETE' };
+	window.UTIL = {
+		isUndefined: function(value) { return (typeof (value) == "undefined"); },
+		isNull: function(value) { return (value === null); },
+		isNullOrUndefined: function(value) { return (this.isUndefined || this.isNull); },
+
+		ajax: function(url, method, data, doneFn, errorFn, alwaysFn) {
+			if (this.isNullOrUndefined(method)) method = HTTP_CONST.GET;
+
+			var opt = {};
+			opt.method = method;
+			opt.url = url;
+			if (!this.isNullOrUndefined(data)) opt.data = data;
+
+			var ajaxFn = $.ajax(opt);
+
+			//unmark this code for jquery version < 3.0
+			// if (!this.isNull(doneFn)) ajaxFn.success(doneFn);
+			// if (!this.isNull(errorFn)) ajaxFn.error(errorFn);
+			// if (!this.isNull(alwaysFn)) ajaxFn.complete(alwaysFn);
+
+			if (!this.isNull(doneFn)) ajaxFn.done(doneFn);
+			if (!this.isNull(errorFn)) ajaxFn.fail(errorFn);
+			if (!this.isNull(alwaysFn)) ajaxFn.always(alwaysFn);
+
+			return ajaxFn;
+		}
+	};
+
+	var generalFnError = function(jqXHR) { alert( "Error!" ); console.log(jqXHR); }
+
+	L.Control.Info = L.Control.extend({
+
+		options: {
+			title: 'Info',
+			titleTooltip: 'Click here for more info',
+			content: '',
+			maxWidth: '300px',
+			titleClass: 'box_info',
+			contentClass: 'box_info'
+		},
+
+		initialize: function(options) {
+			L.Util.setOptions(this, options);
+			this._infoTitle = this.options.title;
+			this._infoContent = this.options.content;
+			this._titleShown = false;
+			this._titleClass = this.options.titleClass;
+			this._contentClass = this.options.contentClass;
+			// this._infoTitleStyle = 'padding: 10px;     background-color: #343434;     color: white; font-size: 14px;';
+			this._infoTitleStyle = 'padding: 3px 7px; font-size: 16px;';
+			this._infoContainerClasses = 'leaflet-control-layers leaflet-control';
+		},
+
+		onAdd: function(map) {
+			var infoContainer = L.DomUtil.create('div', 'leaflet-control-layers');
+
+			var infoTitle = L.DomUtil.create('div');
+			infoContainer.appendChild(infoTitle);
+			infoTitle.setAttribute('style', this._infoTitleStyle);
+
+			var infoBody = L.DomUtil.create('div', 'leaflet-popup-content-wraper');
+			infoContainer.appendChild(infoBody);
+			infoBody.setAttribute('style', 'max-width:' + this.options.maxWidth);
+
+			var infoContent = L.DomUtil.create('div', 'leaflet-popup-content');
+			infoBody.appendChild(infoContent);
+
+			var infoCloseButton = L.DomUtil.create('a', 'leaflet-popup-close-button');
+			infoContainer.appendChild(infoCloseButton);
+			infoCloseButton.innerHTML = 'x';
+			infoCloseButton.setAttribute('style', 'cursor: pointer');
+
+			this._infoContainer = infoContainer;
+			this._infoTitleContainer = infoTitle;
+			this._infoBodyContainer = infoBody;
+			this._infoContentContainer = infoContent;
+			this._infoCloseButtonContainer = infoCloseButton;
+
+			infoTitle.innerHTML = this._infoTitle;
+			infoContent.innerHTML = this._infoContent;
+			this._showTitle();
+
+			L.DomEvent.disableClickPropagation(infoContainer);
+			L.DomEvent.on(infoCloseButton, 'click', L.DomEvent.stop);
+			L.DomEvent.on(infoContainer, 'click', this._showContent, this);
+			L.DomEvent.on(infoCloseButton, 'click', this._showTitle, this);
+
+			return infoContainer;
+		},
+
+		onRemove: function(map) {},
+
+		setTitle: function(title) {
+			this._infoTitle = title;
+			if (this._infoTitleContainer != null) {
+				this._infoTitleContainer.innerHTML = title;
+			}
+		},
+
+		setTitleTooltip: function(titleTooltip) {
+			this._infoTitleTooltip = titleTooltip;
+			if (this._titleShown) {
+				this._showTitleTooltip(true);
+			}
+		},
+
+		setContent: function(content) {
+			this._infoContent = content;
+			if (this._infoContentContainer != null) {
+				this._infoContentContainer.innerHTML = content;
+			}
+		},
+
+		setTitleClass: function(titleClass) {
+			this._titleClass = titleClass;
+			if (this._titleShown) {
+				this._addInfoClass(this._titleClass);
+			}
+		},
+
+		setContentClass: function(contentClass) {
+			this._contentClass = contentClass;
+			if (!this._titleShown) {
+				this._addInfoClass(this._contentClass);
+			}
+		},
+
+		_showTitle: function(evt) {
+			this._addInfoClass(this._titleClass);
+			this._displayElement(this._infoTitleContainer, true);
+			this._displayElement(this._infoBodyContainer, false);
+			this._displayElement(this._infoCloseButtonContainer, false);
+			this._showTitleTooltip(true);
+			this._setCursorToPointer(this._infoContainer, true);
+			this._titleShown = true;
+		},
+
+		_showContent: function(evt) {
+			this._addInfoClass(this._contentClass);
+			this._displayElement(this._infoTitleContainer, false);
+			this._displayElement(this._infoBodyContainer, true);
+			this._displayElement(this._infoCloseButtonContainer, true);
+			this._showTitleTooltip(false);
+			this._setCursorToPointer(this._infoContainer, false);
+			this._titleShown = false;
+		},
+
+		_showTitleTooltip: function(showIt) {
+			this._infoContainer.setAttribute('Title', (showIt) ? this._infoTitleTooltip : '');
+		},
+
+		_displayElement: function(element, displayIt) {
+			element.style.display = (displayIt) ? '' : 'none';
+		},
+
+		_setCursorToPointer: function(element, setIt) {
+			element.style.cursor = (setIt) ? 'pointer' : '';
+		},
+
+		_addInfoClass: function(classToAdd) {
+			L.DomUtil.setClass(this._infoContainer, this._infoContainerClasses + ' ' + classToAdd);
+		}
+	});
+
+	L.control.info = function(opts) {
+		return new L.Control.Info(opts);
+	}
+
+</script>
+
+<script type="text/javascript">
+	var urlDatasource = "datasource.geojson";
+	var baseStyle = { "color": "#ffffff", "weight": 1,"opacity": 0.5, "className": "layername" };
+	var filterMode = false;
+	var map = null;
+	var filterValues = null;
+
+	function onEachFeature(feature, layer) {
+		var popupContent = "<p>Rio: " +feature.properties.rio
+							+"<br/>Provincia: " +feature.properties.provincia
+							+"<br/>Distrito: " +feature.properties.distrito
+							+"<br/>Federation : " +feature.properties.Federation
+							+"<br/>Native Community Name: " +feature.properties.Com_name
+							+"<br/>PNCB affiliation : " +feature.properties.Afil_PNCB
+							+"<br/>Area: " +feature.properties.area_total+"h"
+							+"<br/>Categories: Maderable "
+						    + "</p>";
+
+
+		if (feature.properties && feature.properties.popupContent) {
+			popupContent += feature.properties.popupContent;
+		}
+
+		layer.bindPopup(popupContent);
+	}
+
+	function getBaseTile() 
+	{
+		var urlBaseTile = "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=d7f1b881678e4d889c946381518361fa";
+		var baseTileAttribution = 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>,';
+		baseTileAttribution += 'Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
+
+		var baseTileOptions = { maxZoom: 18, attribution: baseTileAttribution, id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1};
+
+		return L.tileLayer(urlBaseTile,baseTileOptions);
+	}
+
+	function getBaseData(data)
+	{
+		var layerOpt = { style: { ...baseStyle, "color": "#ff7800", "className": "base-layer" } };
+		if(!filterMode) layerOpt.onEachFeature = onEachFeature;
+
+		return L.geoJson(JSON.parse(data),layerOpt);
+	}
+
+	function AddGraphControl()
+	{
+		var graphControl = L.control.info({
+			position: 'topright',
+			title: '<i class="fas fa-chart-pie"></i>',
+			titleTooltip: 'Infographic',
+			titleClass: '',
+			contentClass: ''
+		});
+
+		graphControl.setContent("<h5 class='title'>Superficie total segun</h5><canvas id='infographic'></canvas>");
+		graphControl.setTitleTooltip("Show Infographic");
+
+		graphControl.addTo(map);
+	}
+
+	function AddLegendControl()
+	{
+		var legendControl = L.control.info({
+			position: 'topright',
+			title: '<i class="fas fa-layer-group"></i>',
+			titleTooltip: 'Layer Legend',
+			titleClass: '',
+			contentClass: ''
+		});
+
+		legendControl.setContent("<h5 class='title'>Legend</h5>");
+		legendControl.setTitleTooltip("Legend");
+
+		legendControl.addTo(map);
+	}
+
+	function PopulateFilteredLayer(data,id,field)
+	{
+		var tmpLayers = [];
+		var options = $(id).find("option:selected");
+		var counter = 1;
+		var layerGroupName = field + "-layer";
+		var subfiltervalues = [];
+
+		$.each(options, function(i, v) {
+			var layercolor = randomColor();
+			var fVal = $(v).val();
+			var className = layerGroupName + " " + layerGroupName + "-" + (counter++);
+
+			subfiltervalues.push(fVal);
+
+			var layerOpt = { style: { ...baseStyle, "color": layercolor, "className": className } };
+			layerOpt.filter = function(feature, layer) {
+				if (feature.properties) {
+					return feature.properties[field] !== undefined ? (feature.properties[field]==fVal) : false;
+				}
+				return false;
+			};
+			layerOpt.onEachFeature = onEachFeature;
+
+			tmpLayers.push(L.geoJson(JSON.parse(data),layerOpt))
+		});
+
+		if(subfiltervalues.length > 0) filterValues.push( { "field": field, "values": subfiltervalues } );
+
+		return tmpLayers;
+	}
+
+	function getFilteredData(data)
+	{
+		var filteredLayers = [];
+		filterValues = [];
+
+		//Province: province   "provincia"
+		filteredLayers = filteredLayers.concat(PopulateFilteredLayer(data,"#province","provincia"));
+		//Federation federation  "Federation"
+		filteredLayers = filteredLayers.concat(PopulateFilteredLayer(data,"#federation","Federation"));
+		//Native Community Name   native-community   "Com_name"
+		filteredLayers = filteredLayers.concat(PopulateFilteredLayer(data,"#native-community","Com_name"));
+		//PNCB affiliation	pncb   "Afil_PNCB"
+		filteredLayers = filteredLayers.concat(PopulateFilteredLayer(data,"#pncb","Afil_PNCB"));
+
+		return filteredLayers;
+	}
+
+	function PopulateMap(data)
+	{
+		map = L.map('map', { scrollWheelZoom: false, doubleClickZoom: false });
+
+		var filteredData = getFilteredData(data);
+		if(filteredData.length == 0) filterMode = false;
+		
+		var baseTile = getBaseTile();
+		var baseData = getBaseData(data);
+
+		//add base layer: tilemap and basedata/unfiltered data
+		L.layerGroup([baseTile, baseData]).addTo(map);
+
+		//add filtered layer if exist
+		if(filterMode) L.layerGroup(filteredData).addTo(map);
+
+		map.fitBounds(baseData.getBounds());
+
+		AddGraphControl(); 
+		AddLegendControl();
+	}
+
+	function LoadMap(department) 
+	{
+		var fn_done = function(data) { PopulateMap(data); };
+		var fn_always = function(jqXHR) { filterMode = false; };
+
+		UTIL.ajax(urlDatasource,HTTP_CONST.GET,null,fn_done,generalFnError,fn_always);
+	}
+
+	function InitMap(department)
+	{
+		if(map !== null) {
+			map.off();
+			map.remove();
+		}
+
+		LoadMap(department);
+	}
+
+	$("#btnfiltermap").on("click", function(){
+		filterMode = true;
+		var deptname = $("#department option:selected").val();
+
+		InitMap(deptname);
+	});
+</script>
+
+<script type="text/javascript">
+	var urlDepartment = "department.json";
+	var urlLookup = "lookup.json";
+
+	function MapData(data)
+	{
+		return $.map(data,function(v) { return { label: v, title: v, value: v}; });
+	}
+
+	function OnSingleDropDownChange(option, checked, select) 
+	{
+		var curVal = option.val();
+		select = this.$select[0];
+		var selectId = $(select).attr("id");
+
+		if(checked)
+		{
+			$(select).multiselect('deselectAll', false);
+			$(select).multiselect('select', curVal, false);
+
+			if(selectId == "department") PopulateLookup(curVal);
+		}
+		else {
+			//force at least one option selected for department
+			if(selectId == "department") {
+				var options = $(select).find("option:selected");
+				if(options.length == 0) $(select).multiselect('select', curVal, false);
+			}
+		}
+	}
+
+	function PopulateComboFilter(data,id,placeholderText,multiple)
+	{
+		var opt = { maxHeight: 300, buttonWidth: '100%', inheritClass: true, enableCaseInsensitiveFiltering: true };
+		// opt.buttonContainer = '<div class="btn-group form-control" />';
+
+		if(multiple)
+		{
+			opt.enableFiltering = true;
+			opt.includeSelectAllOption = true;
+		}
+
+		if(!multiple) opt.onChange = OnSingleDropDownChange;
+
+		$(id).multiselect(opt);
+		$(id).multiselect('dataprovider', MapData(data));
+	}
+
+	function PopulateFilter(data)
+	{
+		PopulateComboFilter(data.province, "#province", "Select provinces...",true);
+		PopulateComboFilter(data.federation, "#federation", "Select federations...",true);
+		PopulateComboFilter(data["native community name"], "#native-community", "Select native communities...",true);
+		PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "PNCB affiliation",false);
+	}
+
+	function PopulateLookup(department)
+	{
+		var fn_done = function(data) { PopulateFilter(data); };
+		var fn_always = function(data, status, jqXHR) { if(jqXHR.status == 200) InitMap(department); };
+
+		UTIL.ajax(urlLookup,HTTP_CONST.GET,null,fn_done,generalFnError,fn_always);
+	}
+
+	function PopulateDepartment()
+	{
+		var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Select a departement",false); };
+		var fn_always = function(data, status, jqXHR) {
+			// console.log(jqXHR);
+			if(jqXHR.status == 200) {
+				var firstVal = $("#department option:first").val();
+				$("#department").multiselect('select', firstVal, true);
+			}
+		};
+
+		UTIL.ajax(urlDepartment,HTTP_CONST.GET,null,fn_done,generalFnError,fn_always);
+	}
+
+	function InitPage()
+	{
+		PopulateDepartment();
+	}
+
+	$(document).ready(function () {
+
+        InitPage();
+
+    });
+</script>
