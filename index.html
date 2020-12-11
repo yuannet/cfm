@@ -51,6 +51,8 @@
 	<!-- Bootstrap-multiselect css -->
 	<link rel="stylesheet" href="vendor/bootstrap-multiselect/css/bootstrap-multiselect.css">
 
+	<!-- Leaflet Control Tree css -->
+	<link rel="stylesheet" href="vendor/leaflet-control-tree/L.Control.Layers.Tree.css">
 
 	<style>
 		html, body {
@@ -66,6 +68,14 @@
 		.form-check-label { white-space: normal; }
 		.multiselect-container { width: inherit; }
 		h5.title { color: #454545; font-size: 16px; }
+
+		/* legend custom css */
+		.item-legend { border: unset !important; padding: 3px 0; }
+		.label-legend { font-size: 14px; padding-top: 2px; }
+		.item-legend-child { margin-left: 1.25rem; }
+		.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
+		.leaflet-layerstree-header-name { font-size: 14px; }
+		.leaflet-layerstree-header-label { margin-bottom: 3px; }
 
 	</style>
 </head>
@@ -249,6 +259,7 @@
 	<script src="vendor/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
 	<script src="vendor/randomcolor.js"></script>
 	<script src="vendor/chartjs-plugin-labels.min.js"></script>
+	<script src="vendor/leaflet-control-tree/L.Control.Layers.Tree.js"></script>
 
 </body>
 </html>
@@ -260,6 +271,7 @@
 		isUndefined: function(value) { return (typeof (value) == "undefined"); },
 		isNull: function(value) { return (value === null); },
 		isNullOrUndefined: function(value) { return (this.isUndefined || this.isNull); },
+		formatNum: function(num) { return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); },
 
 		ajax: function(url, method, data, doneFn, errorFn, alwaysFn) {
 			if (this.isNullOrUndefined(method)) method = HTTP_CONST.GET;
@@ -282,6 +294,7 @@
 
 			return ajaxFn;
 		}
+
 	};
 
 	var generalFnError = function(jqXHR) { alert( "Error!" ); console.log(jqXHR); }
@@ -304,7 +317,7 @@
 			this._titleClass = this.options.titleClass;
 			this._contentClass = this.options.contentClass;
 			// this._infoTitleStyle = 'padding: 10px;     background-color: #343434;     color: white; font-size: 14px;';
-			this._infoTitleStyle = 'padding: 3px 7px; font-size: 16px;';
+			this._infoTitleStyle = 'padding: 4px 0px; font-size: 24px; width: 44px; height: 44px; text-align: center';
 			this._infoContainerClasses = 'leaflet-control-layers leaflet-control';
 		},
 
@@ -422,21 +435,6 @@
 	});
 
 	L.control.info = function(opts) { return new L.Control.Info(opts); }
-
-	// function hexToRgb(hex) {
-	// 	// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-	// 	var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-	// 	hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-	// 		return r + r + g + g + b + b;
-	// 	});
-
-	// 	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	// 	return result ? {
-	// 		r: parseInt(result[1], 16),
-	// 		g: parseInt(result[2], 16),
-	// 		b: parseInt(result[3], 16)
-	// 	} : null;
- //    }
 </script>
 
 <script type="text/javascript">
@@ -447,6 +445,9 @@
 	var filteredIDs = null;
 	var infographChart = null;
 	var chartBgColor = randomColor({ count: 4, seed: 42 });
+	var layerColor = randomColor({ count: 40, seed: 1 });
+	var layerColorIndex = 0;
+	var legendOverlay = null;
 
 	function onEachFeature(feature, layer) {
 		var popupContent = "<p>Rio: " +feature.properties.rio
@@ -467,20 +468,49 @@
 		layer.bindPopup(popupContent);
 	}
 
-	function PopulateFilteredLayer(data,id,field)
+	function hexToRgb(hex, alpha) {
+		hex   = hex.replace('#', '');
+		var r = parseInt(hex.length == 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16);
+		var g = parseInt(hex.length == 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16);
+		var b = parseInt(hex.length == 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16);
+		if ( alpha ) {
+		  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+		}
+		else {
+		  return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+		}
+	}
+
+	function GenerateLegendLabel(title,color)
 	{
-		var tmpLayers = [];
+		var tmpLabel = "";
+		tmpLabel += '<span class="badge-legend ml-1 mr-2" ';
+		tmpLabel += 'style="color: ' + color +';background-color: '+ hexToRgb(color, 0.5) +'"';
+		tmpLabel += ">&nbsp;</span>";
+		tmpLabel += '<span>' + title + '</span>';
+
+		return tmpLabel;
+	}
+
+	// function PopulateFilteredLayer(data,id,field)
+	function PopulateFilteredLayer(data,attr)
+	{
+		var id = attr.comboid;
+		var field = attr.fieldname;
 		var options = $(id).find("option:selected");
 		var counter = 1;
 		var layerGroupName = field + "-layer";
 
+		var tmpLayers = [];
+		var tmpSubLegend = [];
 		$.each(options, function(i, v) {
 			var jsonData = JSON.parse(data);
-			var layercolor = randomColor();
+			var tmpColor = (layerColorIndex < layerColor.length) ? layerColor[layerColorIndex++] : randomColor();
 			var fVal = $(v).val();
-			var className = layerGroupName + " " + layerGroupName + "-" + (counter++);
+			var layerSubgroupName = layerGroupName + "-" + (counter++);
+			var className = layerGroupName + " " + layerSubgroupName;
 
-			var layerOpt = { style: { ...baseStyle, "color": layercolor, "className": className } };
+			var layerOpt = { style: { ...baseStyle, "color": tmpColor, "className": className } };
 			layerOpt.onEachFeature = onEachFeature;
 			layerOpt.filter = function(feature, layer) {
 				if (feature.properties) {
@@ -489,7 +519,9 @@
 				return false;
 			};
 
-			tmpLayers.push(L.geoJson(jsonData,layerOpt))
+			var tmpLayer = L.geoJson(jsonData,layerOpt);
+			tmpLayers.push(tmpLayer)
+			tmpSubLegend.push({ label: GenerateLegendLabel(fVal,tmpColor), layer: tmpLayer });
 
 			//get ID of filtered data
 			var tmpFilteredIDs = jsonData.features
@@ -498,27 +530,38 @@
 			filteredIDs = filteredIDs.concat(tmpFilteredIDs);
 		});
 
+		if(tmpSubLegend.length != 0) {
+			legendOverlay.push({ label: attr.fielddesc, children: tmpSubLegend })
+		}
+
+
 		return tmpLayers;
 	}
 
-	function getFilteredLayers(data)
+	function GetFilteredLayers(data)
 	{
 		var tmpFilteredLayers = [];
 		filteredIDs = [];
+		legendOverlay = [];
+		layerColorIndex = 0;
 
-		//Province: province   "provincia"
-		tmpFilteredLayers = tmpFilteredLayers.concat(PopulateFilteredLayer(data,"#province","provincia"));
-		//Federation federation  "Federation"
-		tmpFilteredLayers = tmpFilteredLayers.concat(PopulateFilteredLayer(data,"#federation","Federation"));
-		//Native Community Name   native-community   "Com_name"
-		tmpFilteredLayers = tmpFilteredLayers.concat(PopulateFilteredLayer(data,"#native-community","Com_name"));
-		//PNCB affiliation	pncb   "Afil_PNCB"
-		tmpFilteredLayers = tmpFilteredLayers.concat(PopulateFilteredLayer(data,"#pncb","Afil_PNCB"));
+		if(!filterMode) return [];
+
+		var filterAttribute = [
+			{ comboid: "#province", fieldname: "provincia", fielddesc: "Province" },
+			{ comboid: "#federation", fieldname: "Federation", fielddesc: "Federation" },
+			{ comboid: "#native-community", fieldname: "Com_name", fielddesc: "Native community name" },
+			{ comboid: "#pncb", fieldname: "Afil_PNCB", fielddesc: "PNCB affiliation" },
+		];
+
+		$.each(filterAttribute, function(i,f) {
+			tmpFilteredLayers = tmpFilteredLayers.concat(PopulateFilteredLayer(data,f));
+		});
 
 		return tmpFilteredLayers;
 	}
 
-	function getBaseMap() 
+	function GetBaseMap() 
 	{
 		var urlBaseTile = "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=d7f1b881678e4d889c946381518361fa";
 		var baseTileAttribution = 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>,';
@@ -529,7 +572,7 @@
 		return L.tileLayer(urlBaseTile,baseTileOptions);
 	}
 
-	function getBaseLayer(data,addOnEachFeature)
+	function GetBaseLayer(data,addOnEachFeature)
 	{
 		var layerOpt = { style: { ...baseStyle, "color": "#ff7800", "className": "base-layer" } };
 		if(addOnEachFeature) layerOpt.onEachFeature = onEachFeature;
@@ -537,7 +580,12 @@
 		return L.geoJson(JSON.parse(data),layerOpt);
 	}
 
-	function AddCustomControls()
+	function GetCleanValue(val)
+	{
+		return (val == "Sin información" || val == "N.A.") ? 0 : parseFloat(val.replace(/[^\d\.\-]/g, ""));
+	}
+
+	function PopulateGraph(data)
 	{
 		var graphControl = L.control.info({
 			position: 'topright',
@@ -549,34 +597,8 @@
 
 		graphControl.setContent("<div id='infographic-container'></div>");
 		graphControl.setTitleTooltip("Show Infographic");
-
 		graphControl.addTo(map);
 
-		var legendControl = L.control.info({
-			position: 'topright',
-			title: '<i class="fas fa-layer-group"></i>',
-			titleTooltip: 'Layer Legend',
-			titleClass: '',
-			contentClass: ''
-		});
-
-		legendControl.setContent("<div id='legend-container'></div>");
-		legendControl.setTitleTooltip("Legend");
-
-		legendControl.addTo(map);
-	}
-
-	function GetCleanValue(val)
-	{
-		return (val == "Sin información" || val == "N.A.") ? 0 : parseFloat(val.replace(/[^\d\.\-]/g, ""));
-	}
-
-	function formatNum(num) {
-		return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	}
-
-	function PopulateGraph(data)
-	{
 		var jsonData = JSON.parse(data);
 		var dataFields = ["CODIGO", "AREA_DEMAR","AREA_TITUL","AREA_CESIO","AREA_FISCA","AREA_PROTE","AREA_RESER","Población","Sup_aprov","Sup_TDC"];
 		
@@ -603,10 +625,7 @@
 		var sumPopulation = 0, sumDemar = 0, sumSupAprov = 0, sumSupTDC = 0;
 		var sumTitul = 0, sumCesio = 0, sumProte = 0, sumSin = 0;
 
-		var total_data = 0;
-
 		$.each(statsData, function(i,f) {
-			total_data++;
 			sumPopulation += GetCleanValue(f["Población"]);
 
 			sumDemar += GetCleanValue(f["AREA_DEMAR"]);
@@ -625,12 +644,12 @@
 		var infographContent = "";
 		infographContent += "<div id='info'>";
 		infographContent += "<ul class='latest-posts-list'>";
-		infographContent += "<li><h5 class='title'>Población</h5><span class='information-content'>"+ formatNum(sumPopulation) +"</span></li>";
-		infographContent += "<li><h5 class='title'>Área demarcada</h5><span class='information-content'>"+ formatNum(sumDemar) +"</span></li>";
-		infographContent += "<li><h5 class='title'>Superficie de aprovechamiento (ha)</h5><span class='information-content'>"+ formatNum(sumSupAprov);
+		infographContent += "<li><h5 class='title'>Population</h5><span class='information-content'>"+ UTIL.formatNum(sumPopulation) +"</span></li>";
+		infographContent += "<li><h5 class='title'>Demarcated area</h5><span class='information-content'>"+ UTIL.formatNum(sumDemar) +"</span></li>";
+		infographContent += "<li><h5 class='title'>Forestry use area</h5><span class='information-content'>"+ UTIL.formatNum(sumSupAprov);
 		infographContent += "</span></li>";
-		infographContent += "<li><h5 class='title'>Superficie de bosques con Transferencias Directas Condicionadas TDC (ha)</h5>";
-		infographContent += "<span class='information-content'>"+ formatNum(sumSupTDC) +"</span></li>";
+		infographContent += "<li><h5 class='title'>Forest area with TDC (ha)</h5>";
+		infographContent += "<span class='information-content'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
 		infographContent += "</ul>";
 		infographContent += "<canvas id='infographic' width='250px' height='300px'></canvas>";
 		infographContent += "</div>";
@@ -639,20 +658,25 @@
 
 
 		/* DISPLAY DOUGHNUT CHART */
-		var chartConfig = {
+		var chartdata = {
+			labels: ["Área titulada", "Área forestal de cesión en uso ", "Área forestal de protección o reserva", "Área sin zonificar"],
+			data: [parseInt(sumTitul), parseInt(sumCesio), parseInt(sumProte), parseInt(sumSin)],
+			title: 'Teritorial Zoning'
+		}
+		var chartconfig = {
 			type: 'doughnut',
 			data: {
-				labels: ["Área titulada", "Área forestal de cesión en uso ", "Área forestal de protección o reserva", "Área sin zonificar"],
+				labels: chartdata.labels,
 				datasets: [{
 					label: "",
 					backgroundColor: chartBgColor,
-					data: [parseInt(sumTitul),parseInt(sumCesio),parseInt(sumProte),parseInt(sumSin)]
+					data: chartdata.data
 				}]
 			},
 			options: {
 				title: {
 					display: true,
-					text: 'Teritorial Zoning'
+					text: chartdata.title
 				},
 				responsive: true,
 				legend: { position: 'bottom' },
@@ -666,18 +690,18 @@
 			}
 		};
 
-		infographChart = new Chart(document.getElementById("infographic"),chartConfig);
+		infographChart = new Chart(document.getElementById("infographic"),chartconfig);
 	}
 
 	function PopulateMap(data)
 	{
 		map = L.map('map', { scrollWheelZoom: false, doubleClickZoom: false });
 
-		var filteredLayers = getFilteredLayers(data);
+		var filteredLayers = GetFilteredLayers(data);
 		if(filteredLayers.length == 0) filterMode = false;
 
-		var baseMap = getBaseMap();
-		var baseLayer = getBaseLayer(data, (!filterMode) );
+		var baseMap = GetBaseMap();
+		var baseLayer = GetBaseLayer(data, (!filterMode) );
 
 		//add base layers: base Tilemap and unfiltered JSON data
 		L.layerGroup([baseMap, baseLayer]).addTo(map);
@@ -688,9 +712,10 @@
 		//zoom to bounds
 		map.fitBounds(baseLayer.getBounds());
 
-		AddCustomControls();
-
 		PopulateGraph(data);
+		
+		//add Legend
+		if(legendOverlay.length != 0) L.control.layers.tree(null, legendOverlay).addTo(map);
 	}
 
 	function LoadMap(department) 
@@ -716,30 +741,14 @@
 		var deptname = $("#department option:selected").val();
 
 		InitMap(deptname);
-		// SampleMerge();
 	});
-
-	function SampleMerge() {
-		const data1 = [1,3,5];
-		const data2 = [2,4,6];
-		const data3 = [1,2,7];
-
-		// let data13 = [].concat(data1,data3);
-		// console.log(data13);
-
-		// var data13a = [...new Set([...data13])];
-		// console.log(data13a);
-
-		// $.each(data2, function(i,v) { console.log(i,v); });
-
-	}
 </script>
 
 <script type="text/javascript">
 	var urlDepartment = "department.json";
 	var urlLookup = "lookup.json";
 
-	function MapData(data)
+	function TransformData(data)
 	{
 		return $.map(data,function(v) { return { label: v, title: v, value: v}; });
 	}
@@ -780,7 +789,7 @@
 		if(!multiple) opt.onChange = OnSingleDropDownChange;
 
 		$(id).multiselect(opt);
-		$(id).multiselect('dataprovider', MapData(data));
+		$(id).multiselect('dataprovider', TransformData(data));
 	}
 
 	function PopulateFilter(data)
