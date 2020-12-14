@@ -212,6 +212,10 @@ p.title_header_filter {
     padding: 20px;
 }
 
+col-md-1.nopadding {
+    background-color: white;
+}
+
 
 p.description_header_filter {
     margin-left: 20px;
