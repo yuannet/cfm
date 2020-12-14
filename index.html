@@ -83,7 +83,7 @@
 		.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
 		.leaflet-layerstree-header-name { font-size: 14px; }
 		.leaflet-layerstree-header-label { margin-bottom: 3px; }
-
+		.leaflet-popup-content-wraper { width: 400px; }
 
 		button.navbar-toggle {
 			display: none;
@@ -575,10 +575,9 @@
 				{
 
 
-				//	var urlBaseTile = "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=d7f1b881678e4d889c946381518361fa";
-					var urlBaseTile = "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png";
-					var baseTileAttribution = 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>,';
-					baseTileAttribution += 'Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
+					var urlBaseTile = "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png";
+					var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
+					baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
 
 					var baseTileOptions = { maxZoom: 18, attribution: baseTileAttribution, id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1};
 
