@@ -718,11 +718,11 @@
 	function PopulateLegend() 
 	{
 		if(legendOverlay.length != 0) {
-		var legendOptions = {
-			closedSymbol: '<i class="fas fa-chevron-right"></i>',
-			openedSymbol: '<i class="fas fa-chevron-down"></i>',
-			// spaceSymbol: '&nbsp;&nbsp;'
-		};
+			var legendOptions = {
+				closedSymbol: '<i class="fas fa-chevron-right"></i>',
+				openedSymbol: '<i class="fas fa-chevron-down"></i>',
+				// spaceSymbol: '&nbsp;&nbsp;'
+			};
 
 			var legendControl = L.control.layers.tree(null, legendOverlay, legendOptions);
 			legendControl.addTo(map);
@@ -739,12 +739,12 @@
 
 			$(".leaflet-control-layers-toggle").on("click", function() {
 				legendControl.expand();
-				$(legendCloseButton).toggle();
+				$(legendCloseButton).show();
 			});
 
 			$(legendCloseButton).on("click", function() {
 				legendControl.collapse();
-				$(legendCloseButton).toggle();
+				$(legendCloseButton).hide();
 			});
 		}
 
