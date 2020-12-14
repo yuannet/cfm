@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6680ff1f-3282-4b1a-b901-6226397b8496" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,5 +37,9 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="284" y="112" key="#SSH_Configurations/0.0.1920.1080@0.0.1920.1080" timestamp="1607924683645" />
+    <state x="116" y="99" width="1169" height="725" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607925257281">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="116" y="99" width="1169" height="725" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1607925257281" />
   </component>
 </project>
