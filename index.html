@@ -76,7 +76,7 @@
 		.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
 
 		.leaflet-control-layers-list { max-width: 300px; }
-		.leaflet-popup-content-wraper { width: 300px; }
+		.leaflet-popup-content-wraper { width: 400px; }
 
 		/* legend tree hack */
 		.leaflet-layerstree-header-name, .leaflet-layerstree-closed,
@@ -158,32 +158,32 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="department">Departement:</label>
+											<!-- <label for="department">Departement:</label> -->
 											<select class="form-control" id="department" multiple="multiple"></select>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="province">Province:</label>
+											<!-- <label for="province">Province:</label> -->
 											<select class="form-control" id="province" multiple="multiple"></select>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="federation">Federation :</label>
+											<!-- <label for="federation">Federation :</label> -->
 											<select class="form-control" id="federation" multiple="multiple"></select>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="native-community">Native Community Name:</label>
+											<!-- <label for="native-community">Native Community Name:</label> -->
 											<select class="form-control" id="native-community" multiple="multiple"></select>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="indigenous">Indigenous people</label>
-											<select class="form-control" id="indigenous">
+											<!-- <label for="indigenous">Indigenous people</label> -->
+											<select class="form-control" id="indigenous" multiple="multiple">
 											</select>
 										</div>
 									</div>
@@ -211,7 +211,7 @@
 									</div> -->
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="pncb">PNCB affiliation</label>
+											<!-- <label for="pncb">PNCB affiliation</label> -->
 											<select class="form-control" id="pncb" multiple="multiple"></select>
 										</div>
 									</div>
@@ -659,7 +659,7 @@
 		infographContent += "<li><h5 class='title'>Forest area with TDC (ha)</h5>";
 		infographContent += "<span class='information-content'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
 		infographContent += "</ul>";
-		infographContent += "<canvas id='infographic' width='300px' height='350px'></canvas>";
+		infographContent += "<canvas id='infographic' width='400px' height='400px'></canvas>";
 		infographContent += "</div>";
 
 		$("#infographic-container").html(infographContent);
@@ -793,6 +793,7 @@
 	{
 		var opt = { maxHeight: 300, buttonWidth: '100%', inheritClass: true, enableCaseInsensitiveFiltering: true };
 		// opt.buttonContainer = '<div class="btn-group form-control" />';
+		opt.nonSelectedText = placeholderText;
 
 		if(multiple)
 		{
@@ -808,9 +809,9 @@
 
 	function PopulateFilter(data)
 	{
-		PopulateComboFilter(data.province, "#province", "Select provinces...",true);
-		PopulateComboFilter(data.federation, "#federation", "Select federations...",true);
-		PopulateComboFilter(data["native community name"], "#native-community", "Select native communities...",true);
+		PopulateComboFilter(data.province, "#province", "Province",true);
+		PopulateComboFilter(data.federation, "#federation", "Federation",true);
+		PopulateComboFilter(data["native community name"], "#native-community", "Native Community name",true);
 		PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "PNCB affiliation",false);
 		PopulateComboFilter(data["ethnic group"], "#indigenous", "Indigenous people",true);
 	}
