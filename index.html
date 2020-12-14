@@ -74,8 +74,18 @@
 		.label-legend { font-size: 14px; padding-top: 2px; }
 		.item-legend-child { margin-left: 1.25rem; }
 		.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
-		.leaflet-layerstree-header-name { font-size: 14px; }
+
+		.leaflet-control-layers-list { max-width: 300px; }
+		.leaflet-popup-content-wraper { width: 300px; }
+
+		/* legend tree hack */
+		.leaflet-layerstree-header-name, .leaflet-layerstree-closed,
+		.leaflet-layerstree-opened, .leaflet-layerstree-header-space { font-size: 14px; }
 		.leaflet-layerstree-header-label { margin-bottom: 3px; }
+		.leaflet-layerstree-header-name { padding-left: 5px; }
+		.leaflet-layerstree-header.leaflet-layerstree-header-pointer { margin-bottom: 3px; }
+		div.leaflet-layerstree-node > div.leaflet-layerstree-children { padding-left: 30px; }
+		div.leaflet-layerstree-children-nopad > div.leaflet-layerstree-node { margin-bottom: 5px; }
 
 	</style>
 </head>
@@ -170,6 +180,13 @@
 											<select class="form-control" id="native-community" multiple="multiple"></select>
 										</div>
 									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="indigenous">Indigenous people</label>
+											<select class="form-control" id="indigenous">
+											</select>
+										</div>
+									</div>
 									<!-- <div class="col-md-12">
 										<div class="form-group">
 											<label for="forestry-permit">Forestry Use Permit:</label>
@@ -198,17 +215,6 @@
 											<select class="form-control" id="pncb" multiple="multiple"></select>
 										</div>
 									</div>
-									<!-- <div class="col-md-12">
-										<div class="form-group">
-											<label for="indigenous">Indigenous people</label>
-											<select class="form-control" id="indigenous">
-												<option>Select ...</option>
-												<option>Option A</option>
-												<option>Option B</option>
-												<option>Option C</option>
-											</select>
-										</div>
-									</div> -->
 								</div>
 							</form>
 						</div>
@@ -531,7 +537,7 @@
 		});
 
 		if(tmpSubLegend.length != 0) {
-			legendOverlay.push({ label: attr.fielddesc, children: tmpSubLegend })
+			legendOverlay.push({ label: attr.fielddesc, children: tmpSubLegend, selectAllCheckbox: true })
 		}
 
 
@@ -551,6 +557,7 @@
 			{ comboid: "#province", fieldname: "provincia", fielddesc: "Province" },
 			{ comboid: "#federation", fieldname: "Federation", fielddesc: "Federation" },
 			{ comboid: "#native-community", fieldname: "Com_name", fielddesc: "Native community name" },
+			{ comboid: "#indigenous", fieldname: "PUEBLO_IND", fielddesc: "Indigenous people" },
 			{ comboid: "#pncb", fieldname: "Afil_PNCB", fielddesc: "PNCB affiliation" },
 		];
 
@@ -591,8 +598,9 @@
 			position: 'topright',
 			title: '<i class="fas fa-chart-pie"></i>',
 			titleTooltip: 'Infographic',
-			titleClass: '',
-			contentClass: ''
+			maxWidth: '400px'
+			// titleClass: '',
+			// contentClass: ''
 		});
 
 		graphControl.setContent("<div id='infographic-container'></div>");
@@ -651,7 +659,7 @@
 		infographContent += "<li><h5 class='title'>Forest area with TDC (ha)</h5>";
 		infographContent += "<span class='information-content'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
 		infographContent += "</ul>";
-		infographContent += "<canvas id='infographic' width='250px' height='300px'></canvas>";
+		infographContent += "<canvas id='infographic' width='300px' height='350px'></canvas>";
 		infographContent += "</div>";
 
 		$("#infographic-container").html(infographContent);
@@ -715,7 +723,13 @@
 		PopulateGraph(data);
 		
 		//add Legend
-		if(legendOverlay.length != 0) L.control.layers.tree(null, legendOverlay).addTo(map);
+		var legendOptions = {
+			closedSymbol: '<i class="fas fa-chevron-right"></i>',
+			openedSymbol: '<i class="fas fa-chevron-down"></i>',
+			// spaceSymbol: '&nbsp;&nbsp;'
+		};
+
+		if(legendOverlay.length != 0) L.control.layers.tree(null, legendOverlay, legendOptions).addTo(map);
 	}
 
 	function LoadMap(department) 
@@ -798,6 +812,7 @@
 		PopulateComboFilter(data.federation, "#federation", "Select federations...",true);
 		PopulateComboFilter(data["native community name"], "#native-community", "Select native communities...",true);
 		PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "PNCB affiliation",false);
+		PopulateComboFilter(data["ethnic group"], "#indigenous", "Indigenous people",true);
 	}
 
 	function PopulateLookup(department)
