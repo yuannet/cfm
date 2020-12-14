@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6680ff1f-3282-4b1a-b901-6226397b8496" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ProjectId" id="1lVsyheE38UmY8jzakvDGEYw5Ed" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="300" y="125" key="#Deployment" timestamp="1607924693268">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="300" y="125" key="#Deployment/0.0.1920.1080@0.0.1920.1080" timestamp="1607924693268" />
+    <state x="284" y="112" key="#SSH_Configurations" timestamp="1607924683645">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="284" y="112" key="#SSH_Configurations/0.0.1920.1080@0.0.1920.1080" timestamp="1607924683645" />
+    <state x="116" y="99" width="1169" height="725" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607925257281">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="116" y="99" width="1169" height="725" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1607925257281" />
+  </component>
+</project>

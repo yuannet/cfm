@@ -609,7 +609,6 @@ body.bg1 {
     padding: 0 20px;
     text-transform: uppercase;
     font-family: 'Lato', sans-serif;
-    line-height: 114px;
     font-weight: 400;
     position: relative;
     z-index: 3;
@@ -629,12 +628,12 @@ body.bg1 {
   }
   .flexnav > li:hover > a,
   .flexnav > li.active > a {
-    color: #a6ce39;
+    color: #634f00;
   }
-  .flexnav > li:hover > a:before,
+/*  .flexnav > li:hover > a:before,
   .flexnav > li.active > a:before {
-    background: #a6ce39;
-  }
+    background: #fff;
+  }*/
   .flexnav > li.item-with-ul > a:after {
     display: inline-block;
     content: "\f107";
