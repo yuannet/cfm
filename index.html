@@ -64,6 +64,13 @@
 			height: 100vh;
 		}
 
+		ul.social-links.list-inline {
+			padding-bottom: 0px;
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+
+
 		/* hack style for bootstrap multiselect */
 		.form-check-label { white-space: normal; }
 		.multiselect-container { width: inherit; }
@@ -76,6 +83,11 @@
 		.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
 		.leaflet-layerstree-header-name { font-size: 14px; }
 		.leaflet-layerstree-header-label { margin-bottom: 3px; }
+
+
+		button.navbar-toggle {
+			display: none;
+		}
 
 	</style>
 </head>
@@ -95,13 +107,11 @@
 
 			      	<!-- Banner -->
 			      	<div class="head-info">
-			      		<ul class="social-links">
-			      			<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-							<li><a href="#"><i class="fab fa-pinterest"></i></a></li>
-							<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#"><i class="fa fa-rss"></i></a></li>
+			      		<ul class="social-links list-inline">
+			      			<li><a href="#"><i class="fab fa-twitter fa-2x "></i></a></li>
+							<li><a href="#"><i class="fab fa-facebook-f  fa-2x"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g  fa-2x"></i></a></li>
+							<li><a href="#"><i class="fab fa-instagram  fa-2x"></i></a></li>
 						</ul>
 			      </div>
 			      <!-- Banner / End -->
@@ -225,20 +235,8 @@
 				<div class="footer-copyright">
 					<div class="container">
 						<div class="row">
-							<div class="col-sm-6 col-md-4">
+							<div class="col-sm-6 col-md-6">
 								Copyright &copy; 2020  <a href="index.html">Community Forest Management (CFM)  Peru</a> &nbsp;| &nbsp;All Rights Reserved
-							</div>
-							<div class="col-sm-6 col-md-8">
-								<div class="social-links-wrapper">
-									<span class="social-links-txt">Keep in Touch</span>
-									<ul class="social-links social-links__light">
-										<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-										<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-										<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-										<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-										<li><a href="#"><i class="fa fa-rss"></i></a></li>
-									</ul>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -450,16 +448,17 @@
 	var legendOverlay = null;
 
 	function onEachFeature(feature, layer) {
-		var popupContent = "<p>Rio: " +feature.properties.rio
-							+"<br/>Provincia: " +feature.properties.provincia
-							+"<br/>Distrito: " +feature.properties.distrito
-							+"<br/>Federation : " +feature.properties.Federation
-							+"<br/>Native Community Name: " +feature.properties.Com_name
-							+"<br/>PNCB affiliation : " +feature.properties.Afil_PNCB
-							+"<br/>Area: " +feature.properties.area_total+"h"
-							+"<br/>Categories: Maderable "
-						    + "</p>";
 
+		var popupContent = "<p>"
+							+"<br/>Native Community Name: " +feature.properties.Com_name
+				+"<br/>Provincia: " +feature.properties.provincia
+
+				+"<br/>Federation : " +feature.properties.Federation
+							+"<br/>Date : " +feature.properties.Fecha_afil
+							+"<br/>PNCB affiliation : " +feature.properties.Afil_PNCB
+							+"<br/>Area: " +feature.properties.AREA_DEMAR+" h"
+							+"<br/>Categories: "+feature.properties.Cate_aprov
+						    + "</p>";
 
 		if (feature.properties && feature.properties.popupContent) {
 			popupContent += feature.properties.popupContent;
