@@ -4,7 +4,6 @@
     <list default="true" id="6680ff1f-3282-4b1a-b901-6226397b8496" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,5 +28,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="300" y="125" key="#Deployment" timestamp="1607924693268">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="300" y="125" key="#Deployment/0.0.1920.1080@0.0.1920.1080" timestamp="1607924693268" />
+    <state x="284" y="112" key="#SSH_Configurations" timestamp="1607924683645">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="284" y="112" key="#SSH_Configurations/0.0.1920.1080@0.0.1920.1080" timestamp="1607924683645" />
   </component>
 </project>

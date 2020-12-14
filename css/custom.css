@@ -204,6 +204,7 @@ form {
 p.title_header_filter {
     padding: 10px;
     margin-left: 10px;
+    text-transform: uppercase;
 }
 
 .filter-description {

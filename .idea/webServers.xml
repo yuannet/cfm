@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="af5fad04-508f-448a-9cdf-a5d980c70dc9" name="CFM MAP">
+        <fileTransfer accessType="SFTP" host="52.163.85.10" port="22" sshConfigId="7477ce45-a83b-492a-a3cb-0775ca84a285" sshConfig="yuan@52.163.85.10:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
