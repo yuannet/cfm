@@ -138,7 +138,8 @@ section.page-content.map {
 }
 
 .row.side-bar-filter {
-    margin-top: 31px;
+    /*margin-top: 31px;*/
+    margin-top: 15px;
 }
 
 .leaflet-control-layers.leaflet-control.titleStyle1 {
@@ -223,5 +224,6 @@ p.description_header_filter {
 }
 
 .leaflet-control-layers.leaflet-control {
-    margin-right: 50px !important;
+    /*margin-right: 50px !important;*/
+    margin-right: 25px !important;
 }
