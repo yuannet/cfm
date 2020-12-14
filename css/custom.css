@@ -161,3 +161,62 @@ input.btn.btn-primary {
 .map_container {
     position: relative;
 }
+
+
+h1.title_short {
+    font-size: 40px;
+    color: black;
+    background: white;
+    margin-left: 20px;
+}
+
+h1.title_long {
+     font-size: 20px;
+    padding: 15px 10px;
+ }
+
+.col-md-11.menu-header {
+    background-color: #eece6f;
+    color: #55440c;
+}
+
+nav.nav {
+    padding-top: 14px;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.nopadding_map {
+    padding-left: 0 !important;
+    padding-right: 10px !important;
+    padding-top:  10px !important;
+    padding-bottom: 10px !important;
+    margin: 0 !important;
+}
+
+form {
+    padding: 20px;
+}
+
+p.title_header_filter {
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.filter-description {
+    background-color:    #e5e5e5;
+    padding: 20px;
+}
+
+
+p.description_header_filter {
+    margin-left: 20px;
+    font-size: 24px;
+}
+
+.leaflet-control-layers.leaflet-control {
+    margin-right: 50px !important;
+}
