@@ -1,0 +1,21 @@
+/* hack style for bootstrap multiselect */
+.form-check-label { white-space: normal; }
+.multiselect-container { width: inherit; }
+h5.title { color: #454545; font-size: 16px; }
+
+/* Infografis custom css */
+.leaflet-popup-content-wraper { width: 400px; max-height: calc(100vh - 30px); overflow-x: hidden; overflow-y: auto; }
+
+/* hack style for Leaflet Control Layer Tree */
+.item-legend { border: unset !important; padding: 3px 0; }
+.label-legend { font-size: 14px; padding-top: 2px; }
+.item-legend-child { margin-left: 1.25rem; }
+.badge-legend { display: inline-block; width: 20px; height: 20px; border: 1px solid; }
+.leaflet-control-layers-list { max-width: 400px; min-width: 250px; }
+.leaflet-layerstree-header-name, .leaflet-layerstree-closed,
+.leaflet-layerstree-opened, .leaflet-layerstree-header-space { font-size: 14px; }
+.leaflet-layerstree-header-label { margin-bottom: 3px; }
+.leaflet-layerstree-header-name { padding-left: 5px; }
+.leaflet-layerstree-header.leaflet-layerstree-header-pointer { margin-bottom: 3px; }
+div.leaflet-layerstree-node > div.leaflet-layerstree-children { padding-left: 30px; }
+div.leaflet-layerstree-children-nopad > div.leaflet-layerstree-node { margin-bottom: 5px; }
