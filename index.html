@@ -80,7 +80,30 @@
 
 	</style>
 </head>
-<body  class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
+
+<div class="modal" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" >
+      <div class="modal-body m-2">
+      	<div class="d-inline-flex">
+      		<div>
+				<div class="spinner-border" style="width: 2rem; height: 2rem;" role="status">
+				  	<!-- <span class="sr-only">Loading...</span> -->
+				</div>
+      		</div>
+      		<div class="ml-4">
+      			<h5 class="mb-0 mt-1" id="spinner-text">Loading...</h5>
+      		</div>
+      	</div>
+      </div>
+      <!-- <div class="modal-footer d-none">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
 	<div class="site-wrapper">
 
 		<!-- Header -->
@@ -159,7 +182,7 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-									       <label for="department">Departement:</label>
+									       	<!-- <label for="department">Departamento:</label> -->
 											<select class="form-control" id="department" multiple="multiple"></select>
 										</div>
 									</div>
@@ -250,13 +273,17 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 	<script src="vendor/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
 	<script src="vendor/randomcolor.js"></script>
 	<script src="vendor/chartjs-plugin-labels.min.js"></script>
 	<script src="vendor/leaflet-control-tree/L.Control.Layers.Tree.js"></script>
+
+    <!-- required to for topojson processing -->
+    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+    <!-- leaflet topojson plugin -->
+	<script src="js/leaflet-topojson.js"></script>
 
 	<script src="js/L.Control.Info.js"></script>
 	<script src="js/base-util.js"></script>
@@ -266,6 +293,10 @@
 </html>
 
 <script type="text/javascript">
+	
+	SPIN.reset();
+	SPIN.show();
+
 	function InitPage()
 	{
 		PopulateDepartment();
