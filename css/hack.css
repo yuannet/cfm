@@ -19,3 +19,9 @@ h5.title { color: #454545; font-size: 16px; }
 .leaflet-layerstree-header.leaflet-layerstree-header-pointer { margin-bottom: 3px; }
 div.leaflet-layerstree-node > div.leaflet-layerstree-children { padding-left: 30px; }
 div.leaflet-layerstree-children-nopad > div.leaflet-layerstree-node { margin-bottom: 5px; }
+
+/* popup info */
+dl.pop-info { margin-bottom: 2px; padding: 3px 0; }
+dl.pop-info dd { margin-bottom: 0; }
+/*.pop-info { margin-bottom: 2px; border-bottom: 1px solid #ff7800; }*/
+dl:nth-child(even) { background-color: #efefef; }
