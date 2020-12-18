@@ -36,13 +36,18 @@
 			infoContainer.appendChild(infoBody);
 			infoBody.setAttribute('style', 'max-width:' + this.options.maxWidth);
 
+			var infoCloseButtonBox = L.DomUtil.create('div');
+			infoBody.appendChild(infoCloseButtonBox);
+			infoCloseButtonBox.setAttribute('style', 'position: sticky; position: -webkit-sticky; top: 0;');
+
 			var infoContent = L.DomUtil.create('div', 'leaflet-popup-content');
 			infoBody.appendChild(infoContent);
 
 			var infoCloseButton = L.DomUtil.create('a', 'leaflet-popup-close-button');
-			infoContainer.appendChild(infoCloseButton);
+			infoCloseButtonBox.appendChild(infoCloseButton);
 			infoCloseButton.innerHTML = 'x';
-			infoCloseButton.setAttribute('style', 'cursor: pointer; padding-right: 32px;');
+			infoCloseButton.setAttribute('style', 'cursor: pointer');
+
 
 			this._infoContainer = infoContainer;
 			this._infoTitleContainer = infoTitle;
