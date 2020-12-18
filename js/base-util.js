@@ -10,7 +10,7 @@ window.UTIL = {
 	isUndefined: function(value) { return (typeof (value) == "undefined"); },
 	isNull: function(value) { return (value === null); },
 	isNullOrUndefined: function(value) { return (this.isUndefined || this.isNull); },
-	formatNum: function(num) { return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); },
+	formatNum: function(num,dec=2) { return num.toFixed(dec).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); },
 
 	ajax: function(url, method, data, doneFn, errorFn, alwaysFn) {
 		if (this.isNullOrUndefined(method)) method = HTTP_CONST.GET;
@@ -51,12 +51,21 @@ window.UTIL = {
 };
 
 window.VARS = {
-	baseStyle: { "color": "#ffffff", "weight": 1,"opacity": 0.5, "className": "layername" },
+	baseStyle: { color: "#ffffff", weight: 1, opacity: 0.5, className: "layername" },
 	chartBgColor: randomColor({ count: 4, seed: 42 }),
 	layerColor: randomColor({ count: 40, seed: 1 }),
 	URL: {
-		department: "department.json",
-		lookup: "lookup.json",
-		datasource: "datasource.geojson"
+		department: "json/department.json",
+		lookup: "json/lookup.json",
+		datasource: "json/datasource.json"
+		// datasource: "datasource.geojson"
 	}
+}
+
+window.SPIN = {
+	isLoading: false,
+	show: function() { $("#myModal").removeClass("fade"); $("#myModal").modal("show"); this.isLoading = true; },
+	hide: function() { $("#myModal").addClass("fade"); $("#myModal").modal("hide"); this.isLoading = false; },
+	content: function(html) { $("#spinner-text").html(html); },
+	reset: function() { $("#spinner-text").html("Loading..."); this.isLoading = false; }
 }
