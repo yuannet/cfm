@@ -45,11 +45,11 @@ function PopulateComboFilter(data,id,placeholderText,multiple)
 
 function PopulateFilter(data)
 {
-	PopulateComboFilter(data.province, "#province", "Province",true);
-	PopulateComboFilter(data.federation, "#federation", "Federation",true);
-	PopulateComboFilter(data["native community name"], "#native-community", "Native Community name",true);
-	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "PNCB affiliation",false);
-	PopulateComboFilter(data["ethnic group"], "#indigenous", "Indigenous people",true);
+	PopulateComboFilter(data.province, "#province", "Provincia",true);
+	PopulateComboFilter(data.federation, "#federation", "Federación",true);
+	PopulateComboFilter(data["native community name"], "#native-community", "Comunidad nativa",true);
+	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "Afiliacion al PNCB (Programa Nacional de Conservación de bosques)",false);
+	PopulateComboFilter(data["ethnic group"], "#indigenous", "Pueblo indígena ",true);
 }
 
 function PopulateLookup(department)
@@ -62,7 +62,9 @@ function PopulateLookup(department)
 
 function PopulateDepartment()
 {
-	var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Select a departement",false); };
+	SPIN.content("Loading filter...");
+
+	var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Departamento",false); };
 	var fn_always = function(data, status, jqXHR) {
 		// console.log(jqXHR);
 		if(jqXHR.status == 200) {
