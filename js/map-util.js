@@ -5,6 +5,11 @@ var infographChart = null;
 var layerColorIndex = 0;
 var legendOverlay = null;
 var communityName = null;
+var baseLayers = null;
+var filteredLayers = null;
+var baseLayerCounter = 0;
+var graphControl = null;
+var legendControl = null;
 
 function onEachFeature(feature, layer) {
 
@@ -63,7 +68,6 @@ function GenerateLegendLabel(title,color)
 	return tmpLabel;
 }
 
-// function PopulateFilteredLayer(data,id,field)
 function PopulateFilteredLayer(data,attr)
 {
 	var id = attr.comboid;
@@ -145,9 +149,19 @@ function GetFilteredLayers(data)
 
 function GetBaseMap()
 {
-	var urlBaseTile = "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png";
+	//See here for list of basemaps: https://leaflet-extras.github.io/leaflet-providers/preview/
+
+	/* CartoDB Positron No Labels */
+	var urlBaseTile = "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
 	var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
 	baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+	/* CartoDB Voyager No Labels */
+	// var urlBaseTile = "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png";
+	// var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
+	// baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+	/* OpenStreetMap */
 	// var urlBaseTile = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 	// var baseTileAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -156,10 +170,10 @@ function GetBaseMap()
 	return L.tileLayer(urlBaseTile,baseTileOptions);
 }
 
-function GetBaseLayer(data)
+function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer", opacity = 0.5)
 {
-	var layerOpt = { style: function(feature) { return { ...VARS.baseStyle, "color": "#ff7800", "className": "base-layer" }; }};
-	layerOpt.onEachFeature = onEachFeature;
+	var layerOpt = { style: function(feature) { return { ...VARS.baseStyle, "color": color, "className": className, opacity: opacity }; }};
+	if(fnOnEachFeature != null) layerOpt.onEachFeature = fnOnEachFeature;
 
 	return L.topoJson(data,layerOpt);
 	// return L.geoJson(JSON.parse(data),layerOpt);
@@ -173,7 +187,12 @@ function GetCleanValue(val)
 function PopulateGraph(data)
 {
 	/* ADD DOM FOR GRAPH CONTAINER */
-	var graphControl = L.control.info({
+	if(graphControl != null) {
+		graphControl.remove();
+		graphControl = null;
+	}
+
+	graphControl = L.control.info({
 		position: 'topright',
 		title: '<i class="fas fa-chart-pie"></i>',
 		titleTooltip: 'Infographic',
@@ -289,13 +308,18 @@ function PopulateGraph(data)
 function PopulateLegend() 
 {
 	if(legendOverlay.length != 0) {
+		if(legendControl != null) {
+			legendControl.remove();
+			legendControl = null;
+		}
+		
 		var legendOptions = {
 			closedSymbol: '<i class="fas fa-chevron-right"></i>',
 			openedSymbol: '<i class="fas fa-chevron-down"></i>',
 			// spaceSymbol: '&nbsp;&nbsp;'
 		};
 
-		var legendControl = L.control.layers.tree(null, legendOverlay, legendOptions);
+		legendControl = L.control.layers.tree(null, legendOverlay, legendOptions);
 		legendControl.addTo(map);
 
 		/*
@@ -336,18 +360,17 @@ function PopulateLegend()
 
 function PopulateMap(data)
 {
-	map = L.map('map', { scrollWheelZoom: false, doubleClickZoom: false });
+	if(filteredLayers.length != 0) {
+		$.each(filteredLayers, function(i,layergroup) {
+			layergroup.clearLayers();
+		});
+	}
 
-	var baseMap = GetBaseMap();
-	var baseLayer = GetBaseLayer(data);
-	var filteredLayers = GetFilteredLayers(baseLayer.getGeojson());
+	filteredLayers = GetFilteredLayers(data);
 	if(filteredLayers.length == 0) filterMode = false;
 
 	//remove base layer popup if in Filter mode
-	if(filterMode) $.each(baseLayer._layers, function(i,v) { v.unbindPopup(); });
-
-	//add base layers: base Tilemap and unfiltered JSON data
-	L.layerGroup([baseMap, baseLayer]).addTo(map);
+	if(filterMode) $.each(baseLayers[4]._layers, function(i,v) { v.unbindPopup(); });
 
 	//add filtered layer if exist, on Filter button click
 	if(filterMode) {
@@ -356,30 +379,97 @@ function PopulateMap(data)
 		});
 	}
 
-	//zoom to bounds
-	map.fitBounds(baseLayer.getBounds());
-
 	//add graph control
-	PopulateGraph(baseLayer.getGeojson());
+	PopulateGraph(data);
 
+	//add legend control
 	PopulateLegend();
+
+	//finalize
+	filterMode = false; 
+	SPIN.hide(); 
+	SPIN.reset();
+}
+
+function GenerateBaseLayerLegend()
+{
+	var baselegend = L.control({position: 'bottomleft'});
+
+	baselegend.onAdd = function (map) {
+
+	    var div = L.DomUtil.create('div', 'info legend');
+
+	    for (var i = 1; i <= 3; i++) {
+			var tmpLabel = "";
+			tmpLabel += '<li class="list-group-item"><span class="badge-legend ml-1 mr-2" ';
+			tmpLabel += 'style="color: ' + VARS.BASE.colors[i] +';background-color: '+ UTIL.hexToRgb(VARS.BASE.colors[i], 0.1) +'"';
+			tmpLabel += ">&nbsp;</span>";
+			tmpLabel += '<span>' + VARS.BASE.labels[i] + '</span></li>';
+
+	        div.innerHTML += tmpLabel;
+	    }
+
+	    return div;
+	};
+
+	baselegend.addTo(map);
 }
 
 function LoadMap(department)
 {
-	var fn_done = function(data) { PopulateMap(data); };
-	var fn_always = function(jqXHR) { filterMode = false; SPIN.hide(); SPIN.reset(); };
+	if(baseLayerCounter > 4) {
+		PopulateMap(baseLayers[4].getGeojson()); 
+		return;
+	}
 
-	UTIL.ajax(VARS.URL.datasource,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
+	var fn_done = null;
+	var fn_always = null;
+	var currentBaseUrl = VARS.BASE.urls[baseLayerCounter];
+	var currentColor = VARS.BASE.colors[baseLayerCounter];
+
+	switch(baseLayerCounter) {
+		case 0: 
+			baseLayers[baseLayerCounter++] = GetBaseMap();
+			LoadMap(department);
+			break;
+		case 1:
+		case 2:
+		case 3:
+			fn_done = function(data) { 
+				baseLayers[baseLayerCounter++] = GetBaseLayer(data, null, currentColor, "base-layer-" + baseLayerCounter, 0.1); 
+				LoadMap(department); 
+			};
+			fn_always = null;
+			break;
+		case 4:
+			fn_done = function(data) { 
+				var tmpBaseLayer = GetBaseLayer(data, onEachFeature); 
+				baseLayers[baseLayerCounter++] = tmpBaseLayer;
+
+				L.layerGroup(baseLayers).addTo(map);
+				GenerateBaseLayerLegend();
+
+				map.fitBounds(tmpBaseLayer.getBounds());
+
+				PopulateMap(tmpBaseLayer.getGeojson()); 
+			};
+			fn_always = null;
+			// fn_always = function(jqXHR) { filterMode = false; SPIN.hide(); SPIN.reset(); };
+			break;
+	}
+
+	UTIL.ajax(currentBaseUrl,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
 }
 
 function InitMap(department)
 {
 	SPIN.content("Loading map...");
 
-	if(map !== null) {
-		map.off();
-		map.remove();
+	if(map == null) {
+		map = L.map('map', { scrollWheelZoom: false, doubleClickZoom: false });
+		baseLayers = [];
+		baseLayerCounter = 0;
+		filteredLayers = [];
 	}
 
 	LoadMap(department);
