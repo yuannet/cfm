@@ -57,8 +57,15 @@ window.VARS = {
 	URL: {
 		department: "json/department.json",
 		lookup: "json/lookup.json",
-		datasource: "json/datasource.json"
-		// datasource: "datasource.geojson"
+		// datasource: "json/datasource.json",
+		// additional1: "json/AreaProtegidaNacional.json",
+		// additional2: "json/AreaProtegidaRegional.json",
+		// additional3: "json/AreaProtegidaReservaTerritorial.json",
+	},
+	BASE: {
+		colors: ["", "#28a745", "#007bff", "#dc3545", "#ffc107"],
+		urls: ["", "json/AreaProtegidaNacional.json", "json/AreaProtegidaRegional.json", "json/AreaProtegidaReservaTerritorial.json", "json/datasource.json"],
+		labels: ["","Area Protegida Nacional","Area Protegida Regional","Area Protegida Reserva Territorial",""]
 	}
 }
 
