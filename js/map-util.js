@@ -24,7 +24,7 @@ function onEachFeature(feature, layer) {
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Pueblo indígena </dt>';
 	popupContent += '<dd class="col-sm-5">' + p.PUEBLO_IND + '</dd></dl>';
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Federación</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.federacion + '</dd></dl>';
+	popupContent += '<dd class="col-sm-5">' + p.Federation + '</dd></dl>';
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Departamento</dt>';
 	popupContent += '<dd class="col-sm-5">' + p.nomdpto + '</dd></dl>';
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Provincia</dt>';
