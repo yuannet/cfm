@@ -35,3 +35,8 @@ dl:nth-child(even) { background-color: #efefef; }
     border-radius: 5px;
 }
 .info li.list-group-item { border: unset; padding: 5px; }
+
+span.multiselect-native-select { flex: auto; }
+span.input-group-text { min-width: 65px;  }
+
+.filter-element:last-child { margin-bottom: 0px; }
