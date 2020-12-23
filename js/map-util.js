@@ -19,36 +19,36 @@ function onEachFeature(feature, layer) {
 	p = feature.properties;
 
 	var popupContent = '';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7 pop-info">Comunidad nativa</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.Com_name + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Pueblo indígena </dt>';
-	popupContent += '<dd class="col-sm-5">' + p.PUEBLO_IND + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Federación</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.Federation + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Departamento</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.nomdpto + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Provincia</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.provincia + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Distrito</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.distrito + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Población</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.Población,0) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Situacion del título</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.SIT_TITUL + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Área demarcada</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Área titulada</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Área de cesión en uso</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Categoría de aprovechamiento forestal</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.Cate_aprov + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Superficie de aprovechamiento</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Afiliacion al PNCB (Programa Nacional de Conservación de bosques)</dt>';
-	popupContent += '<dd class="col-sm-5">' + p.Afil_PNCB + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-7">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
-	popupContent += '<dd class="col-sm-5">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6 pop-info">Comunidad nativa</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.Com_name + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
+	popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Federación</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.Federation + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Provincia</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.provincia + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Población</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Población,0) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Situacion del título</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.SIT_TITUL + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área demarcada</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Afiliacion al PNCB (Programa Nacional de Conservación de bosques)</dt>';
+	popupContent += '<dd class="col-sm-6">' + p.Afil_PNCB + '</dd></dl>';
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
+	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
 
 	if (feature.properties && feature.properties.popupContent) {
 		popupContent += feature.properties.popupContent;
@@ -61,7 +61,7 @@ function GenerateLegendLabel(title,color)
 {
 	var tmpLabel = "";
 	tmpLabel += '<span class="badge-legend ml-1 mr-2" ';
-	tmpLabel += 'style="color: ' + color +';background-color: '+ UTIL.hexToRgb(color, 0.5) +'"';
+	tmpLabel += 'style="color: ' + UTIL.hexToRgb(color, 0.6) +';background-color: '+ UTIL.hexToRgb(color, 0.3) +'"';
 	tmpLabel += ">&nbsp;</span>";
 	tmpLabel += '<span>' + title + '</span>';
 
@@ -72,19 +72,27 @@ function PopulateFilteredLayer(data,attr)
 {
 	var id = attr.comboid;
 	var field = attr.fieldname;
-	var options = $(id).find("option:selected");
+	// var options = $(id).find("option:selected");
 	var counter = 1;
 	var layerGroupName = field + "-layer";
 
 	var tmpLayers = [];
 	var tmpSubLegend = [];
 
+	var options = [];
+	if(id == "#native-community") {
+		var searchVal = $(id).val().toLowerCase();
+		if(searchVal != "")
+			options = $("#cmb-native-community option").filter(function(i, e) { return $(e).val().toLowerCase().includes(searchVal)});
+	}
+	else options = $(id).find("option:selected");
+
 	$.each(options, function(i, v) {
 		var tmpColor = (layerColorIndex < VARS.layerColor.length) ? VARS.layerColor[layerColorIndex++] : randomColor();
 		var fVal = $(v).val();
 		var layerSubgroupName = layerGroupName + "-" + (counter++);
 		var className = layerGroupName + " " + layerSubgroupName;
-		var layerOpt = { style: { ...VARS.baseStyle, "color": tmpColor, "className": className } };
+		var layerOpt = { style: { ...VARS.baseStyle, "color": tmpColor, "className": className, opacity: 0.3, fillOpacity: 0.6 } };
 		var tmpFilteredIDs = [];
 
 		var counter = 0;
@@ -170,9 +178,11 @@ function GetBaseMap()
 	return L.tileLayer(urlBaseTile,baseTileOptions);
 }
 
-function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer", opacity = 0.5)
+function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer")
 {
-	var layerOpt = { style: function(feature) { return { ...VARS.baseStyle, "color": color, "className": className, opacity: opacity }; }};
+	var layerOpt = { style: function(feature) { 
+		return { ...VARS.baseStyle, "color": color, "className": className, opacity: 0.4, fillOpacity: 0.1 }; 
+	}};
 	if(fnOnEachFeature != null) layerOpt.onEachFeature = fnOnEachFeature;
 
 	return L.topoJson(data,layerOpt);
@@ -399,16 +409,15 @@ function GenerateBaseLayerLegend()
 
 	    var div = L.DomUtil.create('div', 'info legend');
 
+		var tmpLabel = "";
 	    for (var i = 1; i <= 3; i++) {
-			var tmpLabel = "";
 			tmpLabel += '<li class="list-group-item"><span class="badge-legend ml-1 mr-2" ';
-			tmpLabel += 'style="color: ' + VARS.BASE.colors[i] +';background-color: '+ UTIL.hexToRgb(VARS.BASE.colors[i], 0.1) +'"';
+			tmpLabel += 'style="color: ' + UTIL.hexToRgb(VARS.BASE.colors[i], 0.4) +';background-color: '+ UTIL.hexToRgb(VARS.BASE.colors[i], 0.1) +'"';
 			tmpLabel += ">&nbsp;</span>";
 			tmpLabel += '<span>' + VARS.BASE.labels[i] + '</span></li>';
-
-	        div.innerHTML += tmpLabel;
 	    }
 
+        div.innerHTML += tmpLabel;
 	    return div;
 	};
 
@@ -436,7 +445,7 @@ function LoadMap(department)
 		case 2:
 		case 3:
 			fn_done = function(data) { 
-				baseLayers[baseLayerCounter++] = GetBaseLayer(data, null, currentColor, "base-layer-" + baseLayerCounter, 0.1); 
+				baseLayers[baseLayerCounter++] = GetBaseLayer(data, null, currentColor, "base-layer-" + baseLayerCounter); 
 				LoadMap(department); 
 			};
 			fn_always = null;
@@ -450,6 +459,10 @@ function LoadMap(department)
 				GenerateBaseLayerLegend();
 
 				map.fitBounds(tmpBaseLayer.getBounds());
+
+				L.easyButton( '<i class="fas fa-arrows-alt"></i>', function(){
+				  	map.fitBounds(tmpBaseLayer.getBounds());
+				}, 'Fit bound area to map').addTo(map);
 
 				PopulateMap(tmpBaseLayer.getGeojson()); 
 			};
