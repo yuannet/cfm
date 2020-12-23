@@ -34,7 +34,7 @@ window.UTIL = {
 		return ajaxFn;
 	},
 
-	errorAlert: function(jqXHR) { alert( "Error!" ); console.log(jqXHR); },
+	errorAlert: function(jqXHR) { SPIN.hide(); alert( "Error!" ); console.log(jqXHR); },
 
 	hexToRgb: function(hex, alpha) {
 		hex   = hex.replace('#', '');
