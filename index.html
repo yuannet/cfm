@@ -54,6 +54,9 @@
 	<!-- Leaflet Control Tree css -->
 	<link rel="stylesheet" href="vendor/leaflet-control-tree/L.Control.Layers.Tree.css">
 
+	<!-- Leaflet L.EasyButton -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+
 	<!-- 3rd party control hack css -->
 	<link rel="stylesheet" href="css/hack.css">
 
@@ -175,75 +178,71 @@
 
 								</p>
 							</div>
-							<form side-bar-scroll">
+							<form class="side-bar-scroll">
 								<div class="row side-bar-filter">
-									<div class="col-md-12">
-										<input type="button" id="btnfiltermap" value="Filter Map" class="btn btn-primary filter" data-loading-text="Loading...">
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-									       	<!-- <label for="department">Departamento:</label> -->
+									<div class="col-md-12 form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="add-on-dept">
+													<span class="mx-auto">Dept.</span>
+												</span>
+											</div>
+									       	<!-- <label for="department">Departamento</label> -->
 											<select class="form-control" id="department" multiple="multiple"></select>
 										</div>
 									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<!-- <label for="province">Province:</label> -->
+									<div class="col-md-12 form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="add-on-search">
+													<span class="mx-auto"><i class="fas fa-search"></i></span>
+												</span>
+											</div>
+											<input class="form-control" type="text" id="native-community" name="native-community" placeholder="Comunidad nativa...">
+										</div>
+										<div class="d-none">
+											<select class="form-control" id="cmb-native-community" multiple="multiple"></select>
+										</div>
+									</div>
 
-											<select class="form-control" id="province" multiple="multiple"></select>
+									<div class="col-md-12 form-group" id="filter-container">
+										<div class="input-group">
+											<div class="input-group-prepend input-group-append w-100">
+												<span class="input-group-text w-100 rounded-top" id="inputGroupFileAddon01">Filter</span>
+											</div>
+										</div>
+
+										<div class="card rounded-0">
+											<div class="card-body" style="padding: 10px;">
+												<div class="form-group filter-element">
+													<select class="form-control" id="province" multiple="multiple"></select>
+												</div>
+												<div class="form-group filter-element">
+													<select class="form-control" id="federation" multiple="multiple"></select>
+												</div>
+												<div class="form-group filter-element">
+													<select class="form-control" id="indigenous" multiple="multiple"></select>
+												</div>
+												<div class="form-group filter-element">
+													<select class="form-control" id="pncb" multiple="multiple"></select>
+												</div>
+											</div>
 										</div>
 									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<!-- <label for="federation">Federation :</label> -->
-											<select class="form-control" id="federation" multiple="multiple"></select>
+
+									<div class="col-md-12 form-group d-inline-flex">
+										<div class="col-md-4 btn-group pr-1">
+											<input type="button" id="btnreset" value="Reset" class="btn btn-block btn-outline-dark filter">
+										</div>
+										<div class="col-md-8 btn-group pl-1">
+											<input type="button" id="btnfiltermap" value="Show" class="btn btn-block btn-primary filter">
 										</div>
 									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<!-- <label for="native-community">Native Community Name:</label> -->
-											<select class="form-control" id="native-community" multiple="multiple"></select>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<!-- <label for="indigenous">Indigenous people</label> -->
-											<select class="form-control" id="indigenous" multiple="multiple">
-											</select>
-										</div>
-									</div>
-									<!-- <div class="col-md-12">
-										<div class="form-group">
-											<label for="forestry-permit">Forestry Use Permit:</label>
-											<select class="form-control" id="forestry-permit">
-												<option>Select ...</option>
-												<option>Option A</option>
-												<option>Option B</option>
-												<option>Option C</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<label for="forestry-permit-status">Forestry Use Permit Status</label>
-											<select class="form-control" id="forestry-permit-status">
-												<option>Select ...</option>
-												<option>Option A</option>
-												<option>Option B</option>
-												<option>Option C</option>
-											</select>
-										</div>
-									</div> -->
-									<div class="col-md-12">
-										<div class="form-group">
-											<!-- <label for="pncb">PNCB affiliation</label> -->
-											<select class="form-control" id="pncb" multiple="multiple"></select>
-										</div>
-									</div>
+
 								</div>
 							</form>
 						</div>
-						<div class="col-md-9 nopadding">
+						<div class="col-md-9 nopadding" style="border-left: 1px solid rgba(0,0,0,.125);">
 							<div id='map'></div>
 						</div>
 					</div>
@@ -279,6 +278,7 @@
 	<script src="vendor/randomcolor.js"></script>
 	<script src="vendor/chartjs-plugin-labels.min.js"></script>
 	<script src="vendor/leaflet-control-tree/L.Control.Layers.Tree.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
     <!-- required to for topojson processing -->
     <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
