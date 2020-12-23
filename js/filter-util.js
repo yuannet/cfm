@@ -47,7 +47,7 @@ function PopulateFilter(data)
 {
 	PopulateComboFilter(data.province, "#province", "Provincia",true);
 	PopulateComboFilter(data.federation, "#federation", "Federación",true);
-	PopulateComboFilter(data["native community name"], "#native-community", "Comunidad nativa",true);
+	PopulateComboFilter(data["native community name"], "#cmb-native-community", "Comunidad nativa",true);
 	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "Afiliacion al PNCB (Programa Nacional de Conservación de bosques)",false);
 	PopulateComboFilter(data["ethnic group"], "#indigenous", "Pueblo indígena ",true);
 }
@@ -56,6 +56,7 @@ function PopulateLookup(department)
 {
 	var fn_done = function(data) { PopulateFilter(data); };
 	var fn_always = function(data, status, jqXHR) { if(jqXHR.status == 200) InitMap(department); };
+	// var fn_always = function(data, status, jqXHR) { SPIN.hide(); };
 
 	UTIL.ajax(VARS.URL.lookup,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
 }
@@ -64,7 +65,7 @@ function PopulateDepartment()
 {
 	SPIN.content("Loading filter...");
 
-	var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Departamento",false); };
+	var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Departamento", false); };
 	var fn_always = function(data, status, jqXHR) {
 		// console.log(jqXHR);
 		if(jqXHR.status == 200) {
@@ -75,3 +76,13 @@ function PopulateDepartment()
 
 	UTIL.ajax(VARS.URL.department,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
 }
+
+$("#btnreset").on("click", function() {
+	$("#native-community").val("");
+
+	var ids = ["#province", "#federation", "#pncb", "#indigenous"];
+	$.each(ids, function(i,v) {
+		$(v).multiselect('deselectAll', false);
+		$(v).multiselect('updateButtonText');
+	});
+});
