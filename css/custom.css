@@ -139,7 +139,7 @@ section.page-content.map {
 
 .row.side-bar-filter {
     /*margin-top: 31px;*/
-    margin-top: 15px;
+    /*margin-top: 15px;*/
 }
 
 .leaflet-control-layers.leaflet-control.titleStyle1 {
@@ -153,11 +153,11 @@ section.page-content.map {
 
 }
 
-input.btn.btn-primary {
+/*input.btn.btn-primary {
     width: 90%;
     margin-left: 15px;
     margin-bottom: 20px;
-}
+}*/
 
 .map_container {
     position: relative;
