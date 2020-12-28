@@ -49,6 +49,7 @@ function onEachFeature(feature, layer) {
 	popupContent += '<dd class="col-sm-6">' + p.Afil_PNCB + '</dd></dl>';
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
+	popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
 
 	if (feature.properties && feature.properties.popupContent) {
 		popupContent += feature.properties.popupContent;
