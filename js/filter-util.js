@@ -48,8 +48,10 @@ function PopulateFilter(data)
 	PopulateComboFilter(data.province, "#province", "Provincia",true);
 	PopulateComboFilter(data.federation, "#federation", "Federación",true);
 	PopulateComboFilter(data["native community name"], "#cmb-native-community", "Comunidad nativa",true);
-	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "Afiliacion al PNCB (Programa Nacional de Conservación de bosques)",false);
 	PopulateComboFilter(data["ethnic group"], "#indigenous", "Pueblo indígena ",true);
+	PopulateComboFilter(data["titling situation"], "#titling", "Situacion del título",false);
+	PopulateComboFilter(data["Perm_aprov"], "#perm_aprov", "Permiso de aprovechamiento forestal",false);
+	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "Afiliacion al PNCB",false);
 }
 
 function PopulateLookup(department)

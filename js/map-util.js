@@ -144,6 +144,7 @@ function GetFilteredLayers(data)
 		{ comboid: "#federation", fieldname: "Federation", fielddesc: "Federación" },
 		{ comboid: "#native-community", fieldname: "Com_name", fielddesc: "Comunidad nativa" },
 		{ comboid: "#indigenous", fieldname: "PUEBLO_IND", fielddesc: "Pueblo indígena" },
+		{ comboid: "#indigenous", fieldname: "PUEBLO_IND", fielddesc: "Pueblo indígena" },
 		{ comboid: "#pncb", fieldname: "Afil_PNCB", fielddesc: "Afiliacion al PNCB (Programa Nacional de Conservación de bosques)" },
 	];
 
