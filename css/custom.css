@@ -271,3 +271,8 @@ ul.with-bullet {
     margin-bottom: 0px;
     font-size: small;
 }
+
+td.description {
+    background-color: white;
+    border: none;
+}

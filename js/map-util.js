@@ -19,43 +19,70 @@ function onEachFeature(feature, layer) {
 	p = feature.properties;
 
 	var popupContent = '';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6 pop-info">Comunidad nativa</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.Com_name + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
-	popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Federación</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.Federation + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Provincia</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.provincia + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Población</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Población,0) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Situacion del título</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.SIT_TITUL + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área demarcada</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Afiliacion al PNCB (Programa Nacional de Conservación de bosques)</dt>';
-	popupContent += '<dd class="col-sm-6">' + p.Afil_PNCB + '</dd></dl>';
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
-	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
-	popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4 pop-info">Nombre</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.Com_name + '</dd></dl>';
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Provincia</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.provincia + '</dd></dl>';
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Pueblo indígena</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.Federation + '</dd></dl>';
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Población</dt>';
+	popupContent += '<dd class="col-sm-8">' + FormatValue(p.Población,0) + '</dd></dl>';
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Estado de titulación</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.SIT_TITUL + '</dd></dl>';
+
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Fecha de titulación</dt>';
+	popupContent += '<dd class="col-sm-8"> ---- </dd></dl>';
+
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Superficie total</dt>';
+	popupContent += '<dd class="col-sm-8">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
+
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Federation</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.Federation + '</dd></dl>';
+
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Afiliacion al PNCB</dt>';
+	popupContent += '<dd class="col-sm-9">' + p.Afil_PNCB + '</dd></dl>';
+
+
+	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Permiso forestal</dt>';
+	popupContent += '<dd class="col-sm-8">' + p.Cate_aprov+ '</dd></dl>';
+
+
+
+
 
 	if (feature.properties && feature.properties.popupContent) {
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
+		popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
+		popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
+		popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
+		popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
+		popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
+		popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
+		popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
+		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
+		popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
+		popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
 		popupContent += feature.properties.popupContent;
 	}
 
-	layer.bindPopup(popupContent);
+	layer.bindPopup(popupContent, {
+		minWidth : 200,
+	});
 }
 
 function GenerateLegendLabel(title,color)
