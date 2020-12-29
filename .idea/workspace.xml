@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6680ff1f-3282-4b1a-b901-6226397b8496" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/json/datasource-prev-topo.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/map-util.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/map-util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/datasource.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/datasource.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/json/lookup.json" beforeDir="false" afterPath="$PROJECT_DIR$/json/lookup.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +24,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/json" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/json" />
       <recent name="$PROJECT_DIR$/js" />
       <recent name="$PROJECT_DIR$/images" />
     </key>
