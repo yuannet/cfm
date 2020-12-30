@@ -35,54 +35,65 @@ function onEachFeature(feature, layer) {
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Estado de titulación</dt>';
 	popupContent += '<dd class="col-sm-8">' + p.SIT_TITUL + '</dd></dl>';
 
-
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Fecha de titulación</dt>';
 	popupContent += '<dd class="col-sm-8"> ---- </dd></dl>';
-
 
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Superficie total</dt>';
 	popupContent += '<dd class="col-sm-8">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
 
-
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Federation</dt>';
 	popupContent += '<dd class="col-sm-8">' + p.Federation + '</dd></dl>';
 
-
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Afiliacion al PNCB</dt>';
-	popupContent += '<dd class="col-sm-9">' + p.Afil_PNCB + '</dd></dl>';
-
+	popupContent += '<dd class="col-sm-8">' + p.Afil_PNCB + '</dd></dl>';
 
 	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Permiso forestal</dt>';
 	popupContent += '<dd class="col-sm-8">' + p.Cate_aprov+ '</dd></dl>';
 
+	popupContent += '<dl class="row pop-info"><div class="col-sm-12 text-center mt-2">';
+	popupContent += '<a class="view-more-info text-decoration-none" role="button" data-comname="' + p.Com_name + '">View more &raquo;</a></div></dl>';
 
+	// if (feature.properties && feature.properties.popupContent) {
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
+	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
+	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
+	// 	popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
+	// 	popupContent += feature.properties.popupContent;
+	// }
 
+	layer.bindPopup(popupContent, { minWidth : 200 });
 
+	$("body").off("click", ".view-more-info", ViewMoreCallback);
+	$("body").on("click", ".view-more-info", ViewMoreCallback);
+}
 
-	if (feature.properties && feature.properties.popupContent) {
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
-		popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
-		popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
-		popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
-		popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
-		popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
-		popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
-		popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
-		popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
-		popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
-		popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
-		popupContent += feature.properties.popupContent;
-	}
+function ViewMoreCallback(e) {
+	var comName = $(this).data("comname");
+	var contentUrl = "dummy.html?com=" + comName;
+	var fn_done = function(content) { 
+				
+				$(".view-more-title").html(comName);
+				$(".view-more-content").html(content);
 
-	layer.bindPopup(popupContent, {
-		minWidth : 200,
-	});
+				$('#view-more').modal('show');
+
+			};
+	var fn_always = null;
+
+	UTIL.ajax(contentUrl,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
 }
 
 function GenerateLegendLabel(title,color)
@@ -183,40 +194,6 @@ function GetFilteredLayers(data)
 	});
 
 	return tmpFilteredLayers;
-}
-
-function GetBaseMap()
-{
-	//See here for list of basemaps: https://leaflet-extras.github.io/leaflet-providers/preview/
-
-	/* CartoDB Positron No Labels */
-	var urlBaseTile = "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
-	var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
-	baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
-
-	/* CartoDB Voyager No Labels */
-	// var urlBaseTile = "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png";
-	// var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
-	// baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
-
-	/* OpenStreetMap */
-	// var urlBaseTile = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-	// var baseTileAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
-	var baseTileOptions = { maxZoom: 18, attribution: baseTileAttribution, id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1};
-
-	return L.tileLayer(urlBaseTile,baseTileOptions);
-}
-
-function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer")
-{
-	var layerOpt = { style: function(feature) { 
-		return { ...VARS.baseStyle, "color": color, "className": className, opacity: 0.4, fillOpacity: 0.1 }; 
-	}};
-	if(fnOnEachFeature != null) layerOpt.onEachFeature = fnOnEachFeature;
-
-	return L.topoJson(data,layerOpt);
-	// return L.geoJson(JSON.parse(data),layerOpt);
 }
 
 function GetCleanValue(val)
@@ -439,12 +416,16 @@ function GenerateBaseLayerLegend()
 
 	    var div = L.DomUtil.create('div', 'info legend');
 
-		var tmpLabel = "";
-	    for (var i = 1; i <= 3; i++) {
+		var tmpLabel = '<li class="list-group-item">';
+		tmpLabel += '<span>Áreas Protegidas</span></li>';
+
+	    for (var i = 2; i <= 4; i++) {
+			var opt = VARS.BASE[i];
 			tmpLabel += '<li class="list-group-item"><span class="badge-legend ml-1 mr-2" ';
-			tmpLabel += 'style="color: ' + UTIL.hexToRgb(VARS.BASE.colors[i], 0.4) +';background-color: '+ UTIL.hexToRgb(VARS.BASE.colors[i], 0.1) +'"';
+			tmpLabel += 'style="color: ' + UTIL.hexToRgb(opt.style.color, opt.style.opacity);
+			tmpLabel += ';background-color: '+ UTIL.hexToRgb(opt.style.color, opt.style.fillOpacity) +'"';
 			tmpLabel += ">&nbsp;</span>";
-			tmpLabel += '<span>' + VARS.BASE.labels[i] + '</span></li>';
+			tmpLabel += '<span>' + opt.label + '</span></li>';
 	    }
 
         div.innerHTML += tmpLabel;
@@ -454,17 +435,59 @@ function GenerateBaseLayerLegend()
 	baselegend.addTo(map);
 }
 
+function GetBaseMap()
+{
+	//See here for list of basemaps: https://leaflet-extras.github.io/leaflet-providers/preview/
+
+	/* CartoDB Positron No Labels */
+	var urlBaseTile = "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png";
+	var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
+	baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+	/* CartoDB Voyager No Labels */
+	// var urlBaseTile = "https://a.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png";
+	// var baseTileAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright" style="">OpenStreetMap</a> contributors, ';
+	// baseTileAttribution += '&copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+	/* OpenStreetMap */
+	// var urlBaseTile = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+	// var baseTileAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+	var baseTileOptions = { maxZoom: 18, attribution: baseTileAttribution, id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1};
+
+	return L.tileLayer(urlBaseTile,baseTileOptions);
+}
+
+// function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer")
+// {
+// 	var layerOpt = { style: function(feature) { 
+// 		return { ...VARS.baseStyle, "color": color, "className": className, opacity: 0.4, fillOpacity: 0.1 }; 
+// 	}};
+// 	if(fnOnEachFeature != null) layerOpt.onEachFeature = fnOnEachFeature;
+
+// 	return L.topoJson(data,layerOpt);
+// }
+function GetBaseLayer(data, option)
+{
+	var layerOpt = { style: function(feature) {  return option.style; }};
+	if(option.fnOnEachFeature != null) layerOpt.onEachFeature = option.fnOnEachFeature;
+
+	return L.topoJson(data,layerOpt);
+}
+
 function LoadMap(department)
 {
-	if(baseLayerCounter > 4) {
-		PopulateMap(baseLayers[4].getGeojson()); 
+	if(baseLayerCounter > 5) {
+		PopulateMap(baseLayers[5].getGeojson()); 
 		return;
 	}
 
 	var fn_done = null;
 	var fn_always = null;
-	var currentBaseUrl = VARS.BASE.urls[baseLayerCounter];
-	var currentColor = VARS.BASE.colors[baseLayerCounter];
+	var baseInfo = VARS.BASE[baseLayerCounter];
+	var currentBaseUrl = baseInfo.url;
+	// var currentBaseUrl = VARS.BASE.urls[baseLayerCounter];
+	// var currentColor = VARS.BASE.colors[baseLayerCounter];
 
 	switch(baseLayerCounter) {
 		case 0: 
@@ -474,15 +497,19 @@ function LoadMap(department)
 		case 1:
 		case 2:
 		case 3:
+		case 4:
 			fn_done = function(data) { 
-				baseLayers[baseLayerCounter++] = GetBaseLayer(data, null, currentColor, "base-layer-" + baseLayerCounter); 
+				// baseLayers[baseLayerCounter++] = GetBaseLayer(data, null, currentColor, "base-layer-" + baseLayerCounter); 
+				baseLayers[baseLayerCounter++] = GetBaseLayer(data, baseInfo); 
 				LoadMap(department); 
 			};
 			fn_always = null;
 			break;
-		case 4:
+		case 5:
 			fn_done = function(data) { 
-				var tmpBaseLayer = GetBaseLayer(data, onEachFeature); 
+				baseInfo.fnOnEachFeature = onEachFeature;
+
+				var tmpBaseLayer = GetBaseLayer(data, baseInfo); 
 				baseLayers[baseLayerCounter++] = tmpBaseLayer;
 
 				L.layerGroup(baseLayers).addTo(map);
@@ -504,6 +531,23 @@ function LoadMap(department)
 	UTIL.ajax(currentBaseUrl,HTTP_CONST.GET,null,fn_done,UTIL.errorAlert,fn_always);
 }
 
+function ShowWelcome()
+{
+	var welcome_content = '<div class="welcome-title"><h5 class="my-2">Mapa Interactivo: Gestión de los bosques por comunidades indígenas de Ucayali</h5></div>';
+	welcome_content += '<div class="pt-3 text-justify">Este mapa interactivo busca visibilizar el rol de las comunidades indígenas en la gestión forestal ';
+	welcome_content += 'de Ucayali.  El mapa ilustra las características de comunidades nativas titulada como las superficies de bosque que controlan y la ';
+	welcome_content += 'diversidad de iniciativas forestales de las que participan. El objetivo de este mapa es combinar datos y otra información de ';
+	welcome_content += 'disponibilidad publico proveniente de fuentes gubernamentales y no gubernamentales para sistematizar la en una única plataforma ';
+	welcome_content += 'de acceso libre con un formato simple.  Así el mapa puede destacar el rol de comunidades y facilitar un mejor el entendimiento ';
+	welcome_content += 'de la situación forestal en la Amazonia Peruana. Con ello, espera contribuir a que las y los usuarios conozcan sobre el rol ';
+	welcome_content += 'esencial que cumplen las comunidades indígenas en la gestión de los bosques peruanos, y tomen decisiones informadas ahorrando tiempo ';
+	welcome_content += 'y esfuerzo. </div>';
+
+    var dlg_options = { maxSize: [600,600], size: [550,300], anchor:[75,125] };
+    var dialog = L.control.dialog(dlg_options).addTo(map);
+    dialog.setContent(welcome_content).freeze();
+}
+
 function InitMap(department)
 {
 	SPIN.content("Loading map...");
@@ -513,6 +557,8 @@ function InitMap(department)
 		baseLayers = [];
 		baseLayerCounter = 0;
 		filteredLayers = [];
+
+		ShowWelcome();
 	}
 
 	LoadMap(department);
