@@ -40,3 +40,15 @@ span.multiselect-native-select { flex: auto; }
 span.input-group-text { min-width: 65px;  }
 
 .filter-element:last-child { margin-bottom: 0px; }
+
+/* class untuk base layer label. Tambahin aja 'display:none' kalo mau hide labelnya */
+.base-layer-label {
+	background: rgba(255, 255, 255, 0);
+	border:0;
+	border-radius:0px;
+	box-shadow: 0 0px 0px;
+	text-align: center;
+	white-space: normal;
+	/*min-width: 250px;
+	max-width: 300px;*/
+}
