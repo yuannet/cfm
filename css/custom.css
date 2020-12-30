@@ -276,3 +276,14 @@ td.description {
     background-color: white;
     border: none;
 }
+
+.welcome-title {
+    background-color: #f2d470;
+    color: #655000;
+    padding: 2px 10px;
+    text-align: center
+}
+
+.welcome-content {
+    padding: 20px;
+}
