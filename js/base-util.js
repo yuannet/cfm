@@ -57,16 +57,54 @@ window.VARS = {
 	URL: {
 		department: "json/department.json",
 		lookup: "json/lookup.json",
-		// datasource: "json/datasource.json",
-		// additional1: "json/AreaProtegidaNacional.json",
-		// additional2: "json/AreaProtegidaRegional.json",
-		// additional3: "json/AreaProtegidaReservaTerritorial.json",
 	},
-	BASE: {
-		colors: ["", "#28a745", "#007bff", "#dc3545", "#ffc107"],
-		urls: ["", "json/AreaProtegidaNacional.json", "json/AreaProtegidaRegional.json", "json/AreaProtegidaReservaTerritorial.json", "json/datasource.json"],
-		labels: ["","Area Protegida Nacional","Area Protegida Regional","Area Protegida Reserva Territorial",""]
-	}
+	// BASE: {
+	// 	colors: ["", "#28a745", "#007bff", "#dc3545", "#ffc107"],
+	// 	urls: ["", "json/AreaProtegidaNacional.json", "json/AreaProtegidaRegional.json", "json/AreaProtegidaReservaTerritorial.json", "json/datasource.json"],
+	// 	labels: ["","Area Protegida Nacional","Area Protegida Regional","Area Protegida Reserva Territorial",""]
+	// }
+	BASE: [
+		{ dummy: true },  //only dummy object. 
+		{
+			url: "json/Limite_Ucayali.json", 
+			label: "", 
+			style: { color: "#000000", weight: 2, opacity: 0.6, fillOpacity: 0, className: "base-layer-4", dashArray: "4"},
+			fnOnEachFeature: null,
+		},
+		{
+			url: "json/Area_Natural_Protegida_por_el_Estado.json", 
+			label: "Gestionadas por el Estado", 
+			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-1" },
+			fnOnEachFeature: function (feature, layer) { 
+				layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
+					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+			},
+		},
+		{
+			url: "json/Area_Natural_Protegida_por_el_Estado_y_Comunidades.json", 
+			label: "Cogestionadas por el Estado y las Comunidades", 
+			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.4, className: "base-layer-2" },
+			fnOnEachFeature: function (feature, layer) { 
+				layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
+					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+			},
+		},
+		{
+			url: "json/AreaProtegidaReservaTerritorial.json", 
+			label: "Reservas Territoriales Indígenas", 
+			style: { color: "#dc3545", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-3" },
+			fnOnEachFeature: function (feature, layer) { 
+				layer.bindTooltip(feature.properties.NOMBRES, 
+					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+			},
+		},
+		{
+			url: "json/datasource.json", 
+			label: "", 
+			style: { color: "#ff7800", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-data" },
+			fnOnEachFeature: null,
+		},
+	]
 }
 
 window.SPIN = {
