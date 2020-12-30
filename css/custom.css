@@ -287,3 +287,15 @@ td.description {
 .welcome-content {
     padding: 20px;
 }
+
+.leaflet-control-dialog .leaflet-control-dialog-inner {
+    padding: 0px !important;
+}
+
+.leaflet-control-dialog .leaflet-control-dialog-inner .leaflet-control-dialog-contents {
+    padding: 0px !important;
+}
+
+.pt-3.text-justify {
+    padding: 20px;
+}
