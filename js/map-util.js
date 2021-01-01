@@ -10,6 +10,7 @@ var filteredLayers = null;
 var baseLayerCounter = 0;
 var graphControl = null;
 var legendControl = null;
+var filteredData = null;
 
 function onEachFeature(feature, layer) {
 
@@ -107,24 +108,17 @@ function GenerateLegendLabel(title,color)
 	return tmpLabel;
 }
 
-function PopulateFilteredLayer(data,attr)
+function PopulateFilteredLayer(attr)
 {
 	var id = attr.comboid;
-	var field = attr.fieldname;
-	// var options = $(id).find("option:selected");
+	var field = attr.field.data;
 	var counter = 1;
 	var layerGroupName = field + "-layer";
 
 	var tmpLayers = [];
 	var tmpSubLegend = [];
 
-	var options = [];
-	if(id == "#native-community") {
-		var searchVal = $(id).val().toLowerCase();
-		if(searchVal != "")
-			options = $("#cmb-native-community option").filter(function(i, e) { return $(e).val().toLowerCase().includes(searchVal)});
-	}
-	else options = $(id).find("option:selected");
+	var options = $(id).find("option:selected");
 
 	$.each(options, function(i, v) {
 		var tmpColor = (layerColorIndex < VARS.layerColor.length) ? VARS.layerColor[layerColorIndex++] : randomColor();
@@ -134,9 +128,7 @@ function PopulateFilteredLayer(data,attr)
 		var layerOpt = { style: { ...VARS.baseStyle, "color": tmpColor, "className": className, opacity: 0.3, fillOpacity: 0.6 } };
 		var tmpFilteredIDs = [];
 
-		var counter = 0;
-
-		var polygons = data.features.filter(function(feature) {
+		var polygons = filteredData.features.filter(function(feature) {
 			if (feature.properties && feature.geometry) {
 				return feature.properties[field] !== undefined ? (feature.properties[field]==fVal) : false;
 			}
@@ -153,7 +145,7 @@ function PopulateFilteredLayer(data,attr)
 		});
 
 		tmpgroup = L.layerGroup(polygons);
-		filteredIDs = filteredIDs.concat(tmpFilteredIDs);
+		if (legendOverlay.length == 0) filteredIDs = filteredIDs.concat(tmpFilteredIDs);
 		tmpSubLegend.push({ label: GenerateLegendLabel(fVal,tmpColor), layer: tmpgroup });
 		tmpLayers.push(tmpgroup);
 
@@ -161,8 +153,15 @@ function PopulateFilteredLayer(data,attr)
 
 	});
 
+	if (legendOverlay.length == 0) {
+		filteredData = {
+			type: "FeatureCollection", 
+			features: filteredData.features.filter(function(feature) { return ( filteredIDs.indexOf(feature.properties.CODIGO) !== -1 ); })
+		}
+	}
+
 	if(tmpSubLegend.length != 0) {
-		legendOverlay.push({ label: attr.fielddesc, children: tmpSubLegend, selectAllCheckbox: true })
+		legendOverlay.push({ label: attr.desc, children: tmpSubLegend, selectAllCheckbox: true });
 	}
 
 	return tmpLayers;
@@ -178,18 +177,10 @@ function GetFilteredLayers(data)
 
 	if(!filterMode) return [];
 
-	var filterAttribute = [
-		{ comboid: "#province", fieldname: "provincia", fielddesc: "Provincia" },
-		{ comboid: "#federation", fieldname: "Federation", fielddesc: "Federación" },
-		{ comboid: "#native-community", fieldname: "Com_name", fielddesc: "Comunidad nativa" },
-		{ comboid: "#indigenous", fieldname: "PUEBLO_IND", fielddesc: "Pueblo indígena" },
-		{ comboid: "#perm_aprov", fieldname: "Perm_aprov", fielddesc: "Situacion del título" },
-		{ comboid: "#titling", fieldname: "SIT_TITUL", fielddesc: "Permiso de aprovechamiento forestal" },
-		{ comboid: "#pncb", fieldname: "Afil_PNCB", fielddesc: "Afiliacion al PNCB" },
-	];
+	filteredData = {...data};
 
-	$.each(filterAttribute, function(i,f) {
-		var tmpFilteredLayer = PopulateFilteredLayer(data,f)
+	$.each(VARS.FILTER, function(i,f) {
+		var tmpFilteredLayer = PopulateFilteredLayer(f)
 		if(tmpFilteredLayer.length != 0) tmpFilteredLayers = tmpFilteredLayers.concat(tmpFilteredLayer);
 	});
 
@@ -324,11 +315,12 @@ function PopulateGraph(data)
 
 function PopulateLegend() 
 {
+	if(legendControl != null) {
+		legendControl.remove();
+		legendControl = null;
+	}
+
 	if(legendOverlay.length != 0) {
-		if(legendControl != null) {
-			legendControl.remove();
-			legendControl = null;
-		}
 		
 		var legendOptions = {
 			closedSymbol: '<i class="fas fa-chevron-right"></i>',
@@ -375,14 +367,20 @@ function PopulateLegend()
 
 }
 
-function PopulateMap(data)
+function ResetFilteredLayer()
 {
 	if(filteredLayers.length != 0) {
 		$.each(filteredLayers, function(i,layergroup) {
 			layergroup.clearLayers();
 		});
-	}
 
+		filteredLayers = [];
+	}
+}
+
+function PopulateMap(data)
+{
+	ResetFilteredLayer();
 	filteredLayers = GetFilteredLayers(data);
 	if(filteredLayers.length == 0) filterMode = false;
 
@@ -458,15 +456,6 @@ function GetBaseMap()
 	return L.tileLayer(urlBaseTile,baseTileOptions);
 }
 
-// function GetBaseLayer(data, fnOnEachFeature = null, color = "#ff7800", className = "base-layer")
-// {
-// 	var layerOpt = { style: function(feature) { 
-// 		return { ...VARS.baseStyle, "color": color, "className": className, opacity: 0.4, fillOpacity: 0.1 }; 
-// 	}};
-// 	if(fnOnEachFeature != null) layerOpt.onEachFeature = fnOnEachFeature;
-
-// 	return L.topoJson(data,layerOpt);
-// }
 function GetBaseLayer(data, option)
 {
 	var layerOpt = { style: function(feature) {  return option.style; }};
@@ -543,7 +532,7 @@ function ShowWelcome()
 	welcome_content += 'esencial que cumplen las comunidades indígenas en la gestión de los bosques peruanos, y tomen decisiones informadas ahorrando tiempo ';
 	welcome_content += 'y esfuerzo. </div>';
 
-    var dlg_options = { maxSize: [600,600], size: [550,300], anchor:[75,125] };
+    var dlg_options = { maxSize: [600,600], size: [550,300], anchor:[0,50] };
     var dialog = L.control.dialog(dlg_options).addTo(map);
     dialog.setContent(welcome_content).freeze();
 }
