@@ -58,11 +58,6 @@ window.VARS = {
 		department: "json/department.json",
 		lookup: "json/lookup.json",
 	},
-	// BASE: {
-	// 	colors: ["", "#28a745", "#007bff", "#dc3545", "#ffc107"],
-	// 	urls: ["", "json/AreaProtegidaNacional.json", "json/AreaProtegidaRegional.json", "json/AreaProtegidaReservaTerritorial.json", "json/datasource.json"],
-	// 	labels: ["","Area Protegida Nacional","Area Protegida Regional","Area Protegida Reserva Territorial",""]
-	// }
 	BASE: [
 		{ dummy: true },  //only dummy object. 
 		{
@@ -104,6 +99,50 @@ window.VARS = {
 			style: { color: "#ff7800", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-data" },
 			fnOnEachFeature: null,
 		},
+	],
+	FILTER: [
+		{
+			field: { lookup: "province", data: "provincia" },
+			desc: "Provincia",
+			comboid: "#province",
+			multiselect: true
+		},
+		{
+			field: { lookup: "federation", data: "Federation" },
+			desc: "Federación",
+			comboid: "#federation",
+			multiselect: true
+		},
+		{
+			field: { lookup: "native community name", data: "Com_name" },
+			desc: "Comunidad nativa",
+			comboid: "#native-community",
+			multiselect: true
+		},
+		{
+			field: { lookup: "ethnic group", data: "PUEBLO_IND" },
+			desc: "Pueblo indígena",
+			comboid: "#indigenous",
+			multiselect: true
+		},
+		{
+			field: { lookup: "titling situation", data: "SIT_TITUL" },
+			desc: "Situacion del título",
+			comboid: "#titling",
+			multiselect: false
+		},
+		{
+			field: { lookup: "Perm_aprov", data: "Perm_aprov" },
+			desc: "Permiso de aprovechamiento forestal",
+			comboid: "#perm_aprov",
+			multiselect: false
+		},
+		{
+			field: { lookup: "affiliated to the pncb", data: "Afil_PNCB" },
+			desc: "Afiliacion al PNCB",
+			comboid: "#pncb",
+			multiselect: false
+		},
 	]
 }
 
@@ -114,3 +153,5 @@ window.SPIN = {
 	content: function(html) { $("#spinner-text").html(html); },
 	reset: function() { $("#spinner-text").html("Loading..."); this.isLoading = false; }
 }
+
+
