@@ -45,13 +45,9 @@ function PopulateComboFilter(data,id,placeholderText,multiple)
 
 function PopulateFilter(data)
 {
-	PopulateComboFilter(data.province, "#province", "Provincia",true);
-	PopulateComboFilter(data.federation, "#federation", "Federación",true);
-	PopulateComboFilter(data["native community name"], "#cmb-native-community", "Comunidad nativa",true);
-	PopulateComboFilter(data["ethnic group"], "#indigenous", "Pueblo indígena ",true);
-	PopulateComboFilter(data["titling situation"], "#titling", "Situacion del título",false);
-	PopulateComboFilter(data["Perm_aprov"], "#perm_aprov", "Permiso de aprovechamiento forestal",false);
-	PopulateComboFilter(data["affiliated to the pncb"], "#pncb", "Afiliacion al PNCB",false);
+	$.each(VARS.FILTER, function(i,f) {
+		PopulateComboFilter(data[f.field.lookup], f.comboid, f.desc, f.multiselect);
+	});
 }
 
 function PopulateLookup(department)
@@ -80,10 +76,18 @@ function PopulateDepartment()
 }
 
 $("#btnreset").on("click", function() {
-	$("#native-community").val("");
+	//remove legend control
+	if(legendControl != null) {
+		legendControl.remove();
+		legendControl = null;
+	}
 
-	var ids = ["#province", "#federation", "#pncb", "#indigenous"];
-	$.each(ids, function(i,v) {
+	//clear map from filtered layer
+	ResetFilteredLayer();	
+
+	//reset filter form
+	$.each(VARS.FILTER, function(i,f) {
+		v = f.comboid;
 		$(v).multiselect('deselectAll', false);
 		$(v).multiselect('updateButtonText');
 	});
