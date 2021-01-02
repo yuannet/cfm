@@ -153,7 +153,7 @@ function PopulateFilteredLayer(attr)
 
 	});
 
-	if (legendOverlay.length == 0) {
+	if (legendOverlay.length == 0 && tmpSubLegend.length != 0) {
 		filteredData = {
 			type: "FeatureCollection", 
 			features: filteredData.features.filter(function(feature) { return ( filteredIDs.indexOf(feature.properties.CODIGO) !== -1 ); })
