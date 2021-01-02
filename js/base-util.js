@@ -102,6 +102,12 @@ window.VARS = {
 	],
 	FILTER: [
 		{
+			field: { lookup: "native community name", data: "Com_name" },
+			desc: "Comunidad nativa",
+			comboid: "#native-community",
+			multiselect: true
+		},
+		{
 			field: { lookup: "province", data: "provincia" },
 			desc: "Provincia",
 			comboid: "#province",
@@ -111,12 +117,6 @@ window.VARS = {
 			field: { lookup: "federation", data: "Federation" },
 			desc: "Federación",
 			comboid: "#federation",
-			multiselect: true
-		},
-		{
-			field: { lookup: "native community name", data: "Com_name" },
-			desc: "Comunidad nativa",
-			comboid: "#native-community",
 			multiselect: true
 		},
 		{
