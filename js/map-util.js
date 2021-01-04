@@ -11,6 +11,7 @@ var baseLayerCounter = 0;
 var graphControl = null;
 var legendControl = null;
 var filteredData = null;
+var baseLayerDataIndex = 0;
 
 function onEachFeature(feature, layer) {
 
@@ -385,7 +386,7 @@ function PopulateMap(data)
 	if(filteredLayers.length == 0) filterMode = false;
 
 	//remove base layer popup if in Filter mode
-	if(filterMode) $.each(baseLayers[4]._layers, function(i,v) { v.unbindPopup(); });
+	if(filterMode) $.each(baseLayers[baseLayerDataIndex]._layers, function(i,v) { v.unbindPopup(); });
 
 	//add filtered layer if exist, on Filter button click
 	if(filterMode) {
@@ -467,7 +468,7 @@ function GetBaseLayer(data, option)
 function LoadMap(department)
 {
 	if(baseLayerCounter > 5) {
-		PopulateMap(baseLayers[5].getGeojson()); 
+		PopulateMap(baseLayers[baseLayerDataIndex].getGeojson()); 
 		return;
 	}
 
@@ -496,6 +497,7 @@ function LoadMap(department)
 			break;
 		case 5:
 			fn_done = function(data) { 
+				baseLayerDataIndex = baseLayerCounter;
 				baseInfo.fnOnEachFeature = onEachFeature;
 
 				var tmpBaseLayer = GetBaseLayer(data, baseInfo); 
