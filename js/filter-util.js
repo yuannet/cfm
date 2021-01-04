@@ -77,13 +77,13 @@ function PopulateDepartment()
 
 $("#btnreset").on("click", function() {
 	//remove legend control
-	if(legendControl != null) {
-		legendControl.remove();
-		legendControl = null;
-	}
+	// if(legendControl != null) {
+	// 	legendControl.remove();
+	// 	legendControl = null;
+	// }
 
 	//clear map from filtered layer
-	ResetFilteredLayer();	
+	// ResetFilteredLayer();	
 
 	//reset filter form
 	$.each(VARS.FILTER, function(i,f) {
