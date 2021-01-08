@@ -176,7 +176,7 @@ h1.title_long {
     padding: 15px 10px;
  }
 
-.col-md-11.menu-header {
+.col-md-11.menu-header,.col-md-12.menu-header {
     background-color: #eece6f;
     color: #55440c;
 }
