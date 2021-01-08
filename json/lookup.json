@@ -27,40 +27,55 @@
         "Titulada"
     ],
     "ethnic group": [
-        "Amahuaca","Ash\u00e1ninka","Ash\u00e9ninka","Awaj\u00fan","Cacataibo","Cashinahua","Culina","Madija","Mastanahua","Matsigenka","Nahua","Piro (Yine)","Sharanahua","Shipibo-Conibo","Sin informaci\u00f3n","Yaminahua"
+        "Amahuaca",
+        "Ash\u00e1ninka",
+        "Ash\u00e9ninka",
+        "Awaj\u00fan",
+        "Cacataibo",
+        "Cashinahua",
+        "Culina",
+        "Madija",
+        "Mastanahua",
+        "Matsigenka",
+        "Nahua",
+        "Piro (Yine)",
+        "Sharanahua",
+        "Shipibo-Conibo",
+        "Sin informaci\u00f3n",
+        "Yaminahua"
     ],
     "has a harvest permit": [
-        "No",
-        "S\u00ed"
+        "ACTIVA",
+        "N.A.",
+        "NO ACTIVA"
     ],
     "utilization category": [
-        "MADERABLE",
-        "MADERABLE Y NO MADERABLE",
+        "ACTIVA",
         "N.A.",
-        "NO MADERABLE"
+        "NO ACTIVA"
     ],
     "affiliated to the pncb": [
         "No",
         "S\u00ed"
     ],
     "Perm_aprov": [
-        "No",
-        "S\u00ed"
+        "ACTIVA",
+        "N.A.",
+        "NO ACTIVA"
     ],
     "federation": [
         "ACONADIYSH- Asociaci\u00f3n de Comunidades Nativas para el Desarrollo Integral del Yurua Yono Sharakoiai",
         "ACONAMAC - Asociaci\u00f3n de Comunidades Nativas Ash\u00e1ninkas de Masisea y Caller\u00eda",
-        "FECOMBU - Federaci\u00f3n de Comunidades Nativas del Bajo Ucayali",
         "FECONADIP - Federacion de Comunidades Nativas del Distrito de Iparia",
         "FECONAPA - Federaci\u00f3n de Comunidades Nativas Ash\u00e9ninka de la provincia de Atalaya",
         "FECONAPU - Federacion de Comunidades Nativas de la Provincia de Purus",
         "FECONAU - Federaci\u00f3n de Comunidades Nativas de Ucayali y Afluentes",
         "FECONAYY - Federacion De Comunidades Nativas Yine Yami",
+        "FECONBU - Federaci\u00f3n de Comunidades Nativas del Bajo Ucayali",
         "FENACOCA - Federaci\u00f3n Nativa de Comunidades Cacataibo",
         "OAGP - Organizaci\u00f3n Ash\u00e9ninka del Gran Pajonal",
         "OIDIT - Organizaci\u00f3n Ind\u00edgena del Distrito de Tahuania\u00a0",
         "OIRA - Organizaci\u00f3n Ind\u00edgena Regional de Atalaya",
-        "OIRA - Organizaci\u00f3n Ind\u00edgena Regional de Atalaya\r\nOIRA - Organizaci\u00f3n Ind\u00edgena Regional de Atalaya\r\nOIRA - Organizaci\u00f3n Ind\u00edgena Regional de Ata",
         "ORDECONADIT - Organizaci\u00f3n de Comunidades Nativas del Distrito de Tahuan\u00eda",
         "ORDIM - Organizaci\u00f3n de Desarrollo del distrito Ind\u00edgena de Masisea",
         "Sin informaci\u00f3n",
