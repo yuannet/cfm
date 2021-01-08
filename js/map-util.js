@@ -254,6 +254,7 @@ function PopulateGraph(data)
 	var infographContent = "";
 	infographContent += "<div id='info'>";
 	infographContent += "<ul class='latest-posts-list'>";
+	infographContent += "<li><h4 class='title'>Clasificación de derechos sobre la tierra en las comunidades seleccionadas</h4></li>";
 
 	//Community name, if selected
 	if(communityName.length != 0) {
@@ -268,7 +269,7 @@ function PopulateGraph(data)
 	infographContent += "<li><h5 class='title'>Area de protección</h5><span class='information-content'>"+ UTIL.formatNum(sumProte) +"</span></li>";
 	infographContent += "<li><h5 class='title'>Superficie de aprovechamiento</h5><span class='information-content'>"+ UTIL.formatNum(sumSupAprov);
 	infographContent += "</span></li>";
-	infographContent += "<li><h5 class='title'>Superficie  de bosques con Transferencia directa condicionada TDC</h5>";
+	infographContent += "<li><h5 class='title'>Superficie bajo transferencia directa condicionada (PNCB)</h5>";
 	infographContent += "<span class='information-content'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
 	infographContent += "</ul>";
 

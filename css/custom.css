@@ -299,3 +299,10 @@ td.description {
 .pt-3.text-justify {
     padding: 20px;
 }
+
+h4.title {
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    border-bottom: 1px solid darkgrey;
+}
