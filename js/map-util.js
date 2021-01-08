@@ -12,6 +12,7 @@ var graphControl = null;
 var legendControl = null;
 var filteredData = null;
 var baseLayerDataIndex = 0;
+var baseLayerLegendControl = null;
 
 function onEachFeature(feature, layer) {
 
@@ -409,29 +410,37 @@ function PopulateMap(data)
 
 function GenerateBaseLayerLegend()
 {
-	var baselegend = L.control({position: 'bottomleft'});
+	if(baseLayerLegendControl != null) {
+		baseLayerLegendControl.remove();
+		baseLayerLegendControl = null;
+	}
 
-	baselegend.onAdd = function (map) {
+	baseLayerLegendControl = L.control.info({
+		position: 'bottomleft',
+		title: '<i class="fas fa-images"></i>',
+		titleTooltip: 'Áreas Protegidas',
+		maxWidth: '400px'
+	});
 
-	    var div = L.DomUtil.create('div', 'info legend');
+	baseLayerLegendControl.setContent("<div id='base-layer-legend-container' class='info legend'></div>");
+	baseLayerLegendControl.setTitleTooltip("Áreas Protegidas");
+	baseLayerLegendControl.addTo(map);
 
-		var tmpLabel = '<li class="list-group-item">';
-		tmpLabel += '<span>Áreas Protegidas</span></li>';
+	var tmpLabel = '<li class="list-group-item">';
+	tmpLabel += '<span>Áreas Protegidas</span></li>';
 
-	    for (var i = 2; i <= 4; i++) {
-			var opt = VARS.BASE[i];
-			tmpLabel += '<li class="list-group-item"><span class="badge-legend ml-1 mr-2" ';
-			tmpLabel += 'style="color: ' + UTIL.hexToRgb(opt.style.color, opt.style.opacity);
-			tmpLabel += ';background-color: '+ UTIL.hexToRgb(opt.style.color, opt.style.fillOpacity) +'"';
-			tmpLabel += ">&nbsp;</span>";
-			tmpLabel += '<span>' + opt.label + '</span></li>';
-	    }
+    for (var i = 2; i <= 4; i++) {
+		var opt = VARS.BASE[i];
+		tmpLabel += '<li class="list-group-item"><span class="badge-legend ml-1 mr-2" ';
+		tmpLabel += 'style="color: ' + UTIL.hexToRgb(opt.style.color, opt.style.opacity);
+		tmpLabel += ';background-color: '+ UTIL.hexToRgb(opt.style.color, opt.style.fillOpacity) +'"';
+		tmpLabel += ">&nbsp;</span>";
+		tmpLabel += '<span>' + opt.label + '</span></li>';
+    }
 
-        div.innerHTML += tmpLabel;
-	    return div;
-	};
+	$("#base-layer-legend-container").html("<div id='info'>" + tmpLabel + "</div>");
 
-	baselegend.addTo(map);
+	baseLayerLegendControl._showContent();
 }
 
 function GetBaseMap()
