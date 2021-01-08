@@ -27,16 +27,10 @@ dl.pop-info dd { margin-bottom: 0; }
 dl:nth-child(even) { background-color: #efefef; }
 
 /* base legend */
-.info {
-    padding: 5px;
-    font-size: 14px;
-    background: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
-}
-.info li.list-group-item { border: unset; padding: 5px; }
+.info { font-size: 14px; }
+.info li.list-group-item { border: unset; padding: 1px; }
 
-span.multiselect-native-select { flex: auto; }
+span.multiselect-native-select { flex: auto; max-width: calc(100% - 64px); }
 span.input-group-text { min-width: 65px;  }
 
 .filter-element:last-child { margin-bottom: 0px; }
@@ -51,4 +45,5 @@ span.input-group-text { min-width: 65px;  }
 	white-space: normal;
 	/*min-width: 250px;
 	max-width: 300px;*/
+	/*display: none;*/
 }
