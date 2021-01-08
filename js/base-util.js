@@ -71,8 +71,9 @@ window.VARS = {
 			label: "Gestionadas por el Estado", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-1" },
 			fnOnEachFeature: function (feature, layer) { 
-				layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
-					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				// layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
+				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
 			},
 		},
 		{
@@ -80,8 +81,9 @@ window.VARS = {
 			label: "Cogestionadas por el Estado y las Comunidades", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.4, className: "base-layer-2" },
 			fnOnEachFeature: function (feature, layer) { 
-				layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
-					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				// layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
+				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
 			},
 		},
 		{
@@ -89,8 +91,9 @@ window.VARS = {
 			label: "Reservas Territoriales Indígenas", 
 			style: { color: "#dc3545", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-3" },
 			fnOnEachFeature: function (feature, layer) { 
-				layer.bindTooltip(feature.properties.NOMBRES, 
-					{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				// layer.bindTooltip(feature.properties.NOMBRES, 
+				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
+				layer.bindPopup(feature.properties.NOMBRES); 
 			},
 		},
 		{
