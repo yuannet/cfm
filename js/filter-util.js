@@ -35,6 +35,8 @@ function PopulateComboFilter(data,id,placeholderText,multiple)
 	{
 		opt.enableFiltering = true;
 		opt.includeSelectAllOption = true;
+		// opt.includeResetOption = true;
+		// opt.includeResetDivider = true;
 	}
 
 	if(!multiple) opt.onChange = OnSingleDropDownChange;
@@ -63,7 +65,7 @@ function PopulateDepartment()
 {
 	SPIN.content("Loading filter...");
 
-	var fn_done = function(msg) {  PopulateComboFilter(msg.departement, "#department", "Departamento", false); };
+	var fn_done = function(data) {  PopulateComboFilter(data.departement, "#department", "Departamento", false); };
 	var fn_always = function(data, status, jqXHR) {
 		// console.log(jqXHR);
 		if(jqXHR.status == 200) {
@@ -77,13 +79,13 @@ function PopulateDepartment()
 
 $("#btnreset").on("click", function() {
 	//remove legend control
-	// if(legendControl != null) {
-	// 	legendControl.remove();
-	// 	legendControl = null;
-	// }
+	if(legendControl != null) {
+		legendControl.remove();
+		legendControl = null;
+	}
 
 	//clear map from filtered layer
-	// ResetFilteredLayer();	
+	ResetFilteredLayer();	
 
 	//reset filter form
 	$.each(VARS.FILTER, function(i,f) {
