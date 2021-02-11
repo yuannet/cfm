@@ -14,70 +14,37 @@ var filteredData = null;
 var baseLayerDataIndex = 0;
 var baseLayerLegendControl = null;
 
-function onEachFeature(feature, layer) {
-
+function GetPopupContent(feature) {
 	function FormatValue(val,dec) {
 		return (val == "Sin información" || val == "N.A.") ? val : UTIL.formatNum(parseFloat(val.replace(/[^\d\.\-]/g, "")),dec);
 	};
 	p = feature.properties;
-
 	var popupContent = '';
 
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4 pop-info">Nombre</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.Com_name + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Provincia</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.provincia + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Pueblo indígena</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.PUEBLO_IND + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Población</dt>';
-	popupContent += '<dd class="col-sm-8">' + FormatValue(p.Población,0) + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Estado de titulación</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.SIT_TITUL + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Fecha de titulación</dt>';
-	popupContent += '<dd class="col-sm-8"> ---- </dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Superficie total</dt>';
-	popupContent += '<dd class="col-sm-8">' + FormatValue(p.AREA_DEMAR,2) + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Federation</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.Federation + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Afiliacion al PNCB</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.Afil_PNCB + '</dd></dl>';
-
-	popupContent += '<dl class="row pop-info"><dt class="col-sm-4">Permiso forestal</dt>';
-	popupContent += '<dd class="col-sm-8">' + p.Cate_aprov+ '</dd></dl>';
+	var data = [
+		{ 'label': 'Nombre', 'value': p.Com_name },
+		{ 'label': 'Provincia', 'value': p.provincia },
+		{ 'label': 'Pueblo indígena', 'value': p.PUEBLO_IND },
+		{ 'label': 'Población', 'value': FormatValue(p.Población,0) },
+		{ 'label': 'Estado de titulación', 'value': p.SIT_TITUL },
+		{ 'label': 'Fecha de titulación', 'value': p.Fecha_TITU },
+		{ 'label': 'Superficie total', 'value': FormatValue(p.AREA_DEMAR,2) },
+		{ 'label': 'Federation', 'value': p.Federation },
+		{ 'label': 'Afiliacion al PNCB', 'value': p.Afil_PNCB },
+		{ 'label': 'Permiso forestal', 'value': p.Cate_aprov },
+	]
+	popupContent += UTIL.generatePopupContent(data);
 
 	popupContent += '<dl class="row pop-info"><div class="col-sm-12 text-center mt-2">';
-	popupContent += '<a class="view-more-info text-decoration-none" role="button" data-comname="' + p.Com_name + '">View more &raquo;</a></div></dl>';
+	popupContent += '<a class="view-more-info text-decoration-none" role="button" data-comname="' + p.Com_name + '">Ver más &raquo;</a></div></dl>';
 
-	// if (feature.properties && feature.properties.popupContent) {
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Pueblo indígena </dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + p.PUEBLO_IND + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Departamento</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + p.nomdpto + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Distrito</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + p.distrito + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área titulada</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_TITUL,2) + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Área de cesión en uso</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.AREA_CESIO,2) + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Categoría de aprovechamiento forestal</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + p.Cate_aprov + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie de aprovechamiento</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_aprov,2) + '</dd></dl>';
-	// 	popupContent += '<dl class="row pop-info"><dt class="col-sm-6">Superficie  de bosques con Transferencia directa condicionada TDC</dt>';
-	// 	popupContent += '<dd class="col-sm-6">' + FormatValue(p.Sup_TDC,2) + '</dd></dl>';
-	// 	popupContent += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> View More </button>';
-	// 	popupContent += feature.properties.popupContent;
-	// }
+	return popupContent;
+}
 
-	layer.bindPopup(popupContent, { minWidth : 200 });
+function onEachFeature(feature, layer) {
+
+	var popupContent = GetPopupContent(feature);
+	layer.bindPopup(popupContent, { minWidth : 300 });
 
 	$("body").off("click", ".view-more-info", ViewMoreCallback);
 	$("body").on("click", ".view-more-info", ViewMoreCallback);
@@ -85,7 +52,7 @@ function onEachFeature(feature, layer) {
 
 function ViewMoreCallback(e) {
 	var comName = $(this).data("comname");
-	var contentUrl = "dummy.html?com=" + comName;
+	var contentUrl = "html/dummy.html?com=" + comName;
 	var fn_done = function(content) { 
 				
 				$(".view-more-title").html(comName);
@@ -534,19 +501,17 @@ function LoadMap(department)
 
 function ShowWelcome()
 {
-	var welcome_content = '<div class="welcome-title"><h5 class="my-2">Mapa Interactivo: Gestión de los bosques por comunidades indígenas de Ucayali</h5></div>';
-	welcome_content += '<div class="pt-3 text-justify">Este mapa interactivo busca visibilizar el rol de las comunidades indígenas en la gestión forestal ';
-	welcome_content += 'de Ucayali.  El mapa ilustra las características de comunidades nativas titulada como las superficies de bosque que controlan y la ';
-	welcome_content += 'diversidad de iniciativas forestales de las que participan. El objetivo de este mapa es combinar datos y otra información de ';
-	welcome_content += 'disponibilidad publico proveniente de fuentes gubernamentales y no gubernamentales para sistematizar la en una única plataforma ';
-	welcome_content += 'de acceso libre con un formato simple.  Así el mapa puede destacar el rol de comunidades y facilitar un mejor el entendimiento ';
-	welcome_content += 'de la situación forestal en la Amazonia Peruana. Con ello, espera contribuir a que las y los usuarios conozcan sobre el rol ';
-	welcome_content += 'esencial que cumplen las comunidades indígenas en la gestión de los bosques peruanos, y tomen decisiones informadas ahorrando tiempo ';
-	welcome_content += 'y esfuerzo. </div>';
+	var contentUrl = "html/welcome.html";
+	var fn_done = function(content) { 
+		var dlg_options = { maxSize: [600,600], size: [550,300], anchor:[0,50] };
+		var dialog = L.control.dialog(dlg_options).addTo(map);
+		dialog.setContent(content).freeze();
+	};
+	var fn_always = null;
+	var fn_error = function(jqXHR) { console.log( "Unable to show Welcome message"); console.log(jqXHR); }
 
-    var dlg_options = { maxSize: [600,600], size: [550,300], anchor:[0,50] };
-    var dialog = L.control.dialog(dlg_options).addTo(map);
-    dialog.setContent(welcome_content).freeze();
+	UTIL.ajax(contentUrl,HTTP_CONST.GET,null,fn_done,fn_error,fn_always);
+
 }
 
 function InitMap(department)
