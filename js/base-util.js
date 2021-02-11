@@ -47,6 +47,19 @@ window.UTIL = {
 		else {
 			return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 		}
+	},
+
+	generatePopupContent: function(data, className=null) {
+		var content = "";
+
+		if(className == null) className = ["col-sm-5", "col-sm-7"];
+
+		$.each(data,function(i,d) {
+			content += '<dl class="row pop-info"><dt class="pop-info ' + className[0] + '">' + d.label + '</dt>';
+			content += '<dd class="' + className[1] + '">' + d.value + '</dd></dl>';
+		});
+
+		return content;
 	}
 };
 
@@ -67,37 +80,53 @@ window.VARS = {
 			fnOnEachFeature: null,
 		},
 		{
-			url: "json/Area_Natural_Protegida_por_el_Estado.json", 
+			url: "json/Area_Natural_Protegida_por_el_Estado_20210118.json", 
 			label: "Gestionadas por el Estado", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-1" },
 			fnOnEachFeature: function (feature, layer) { 
-				// layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
-				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
-				layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
+				//layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
+				var data = [
+					{ 'label': 'Categoría', 'value': feature.properties.ANP_CATE },
+					{ 'label': 'Nombre', 'value': feature.properties.ANP_NOMB },
+					{ 'label': 'Área (ha)', 'value': feature.properties.ANP_ARLE },
+					{ 'label': 'Fecha de creación', 'value': feature.properties.ANP_FECREA },
+					{ 'label': 'Resolución', 'value': feature.properties.ANP_BALECR },
+				]
+				layer.bindPopup(UTIL.generatePopupContent(data), { minWidth : 300 });
 			},
 		},
 		{
-			url: "json/Area_Natural_Protegida_por_el_Estado_y_Comunidades.json", 
+			url: "json/Area_Natural_Protegida_por_el_Estado_y_Comunidades_20210118.json", 
 			label: "Cogestionadas por el Estado y las Comunidades", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.4, className: "base-layer-2" },
 			fnOnEachFeature: function (feature, layer) { 
-				// layer.bindTooltip(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB, 
-				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
-				layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
+				//layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
+				var data = [
+					{ 'label': 'Categoría', 'value': feature.properties.ANP_CATE },
+					{ 'label': 'Nombre', 'value': feature.properties.ANP_NOMB },
+					{ 'label': 'Área (ha)', 'value': feature.properties.ANP_ARLE },
+					{ 'label': 'Fecha de creación', 'value': feature.properties.ANP_FECREA },
+					{ 'label': 'Resolución', 'value': feature.properties.ANP_BALECR },
+				]
+				layer.bindPopup(UTIL.generatePopupContent(data), { minWidth : 300 });
 			},
 		},
 		{
-			url: "json/AreaProtegidaReservaTerritorial.json", 
+			url: "json/AreaProtegidaReservaTerritorial_20210118.json", 
 			label: "Reservas Territoriales Indígenas", 
 			style: { color: "#dc3545", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-3" },
 			fnOnEachFeature: function (feature, layer) { 
-				// layer.bindTooltip(feature.properties.NOMBRES, 
-				// 	{ permanent:true, direction:'center', className: 'base-layer-label' }); 
-				layer.bindPopup(feature.properties.NOMBRES); 
+				//layer.bindPopup(feature.properties.NOMBRES); 
+				var data = [
+					{ 'label': 'Nombre', 'value': feature.properties.NOMBRES },
+					{ 'label': 'Área (ha)', 'value': feature.properties.HECTARES },
+					{ 'label': 'Resolución', 'value': feature.properties.RECONOCIDO },
+				]
+				layer.bindPopup(UTIL.generatePopupContent(data,["col-sm-4", "col-sm-8"]), { minWidth : 300 });
 			},
 		},
 		{
-			url: "json/datasource.json", 
+			url: "json/datasource_20210118.json", 
 			label: "", 
 			style: { color: "#ff7800", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-data" },
 			fnOnEachFeature: null,
@@ -156,5 +185,3 @@ window.SPIN = {
 	content: function(html) { $("#spinner-text").html(html); },
 	reset: function() { $("#spinner-text").html("Loading..."); this.isLoading = false; }
 }
-
-
