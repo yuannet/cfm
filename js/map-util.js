@@ -226,18 +226,18 @@ function PopulateGraph(data)
 	//Community name, if selected
 	if(communityName.length != 0) {
 		infographContent += "<li><h5 class='title'>Comunidad nativa</h5>";
-		infographContent += "<span class='information-content'>"+ communityName.join(", ") +"</span></li>";
+		infographContent += "<span class='information-content text-success'>"+ communityName.join(", ") +"</span></li>";
 	}
 
 	// infographContent += "<li><h5 class='title'>Población</h5><span class='information-content'>"+ UTIL.formatNum(sumPopulation,0) +"</span></li>";
-	infographContent += "<li><h5 class='title'>Área demarcada</h5><span class='information-content'>"+ UTIL.formatNum(sumDemar) +"</span></li>";
-	infographContent += "<li><h5 class='title'>Área titulada</h5><span class='information-content'>"+ UTIL.formatNum(sumTitul) +"</span></li>";
-	infographContent += "<li><h5 class='title'>Área de cesión en uso</h5><span class='information-content'>"+ UTIL.formatNum(sumCesio) +"</span></li>";
-	infographContent += "<li><h5 class='title'>Area de protección</h5><span class='information-content'>"+ UTIL.formatNum(sumProte) +"</span></li>";
-	infographContent += "<li><h5 class='title'>Superficie de aprovechamiento</h5><span class='information-content'>"+ UTIL.formatNum(sumSupAprov);
+	infographContent += "<li><h5 class='title'>Área demarcada</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumDemar) +"</span></li>";
+	infographContent += "<li><h5 class='title'>Área titulada</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumTitul) +"</span></li>";
+	infographContent += "<li><h5 class='title'>Área de cesión en uso</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumCesio) +"</span></li>";
+	infographContent += "<li><h5 class='title'>Area de protección</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumProte) +"</span></li>";
+	infographContent += "<li><h5 class='title'>Superficie de aprovechamiento</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumSupAprov);
 	infographContent += "</span></li>";
 	infographContent += "<li><h5 class='title'>Superficie bajo transferencia directa condicionada (PNCB)</h5>";
-	infographContent += "<span class='information-content'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
+	infographContent += "<span class='information-content text-success'>"+ UTIL.formatNum(sumSupTDC) +"</span></li>";
 	infographContent += "</ul>";
 
 	//dougnut chart container
