@@ -93,4 +93,13 @@ $("#btnreset").on("click", function() {
 		$(v).multiselect('deselectAll', false);
 		$(v).multiselect('updateButtonText');
 	});
+
+	//re-bind popup to base layer
+	$.each(baseLayers[baseLayerDataIndex]._layers, function(i,v) { 
+		var popupContent = GetPopupContent(v.feature);
+		v.bindPopup(popupContent, { minWidth : 200 });
+	});
+
+	//set filter mode to false
+	filterMode = false;
 });
