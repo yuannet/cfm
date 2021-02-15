@@ -225,7 +225,7 @@ function PopulateGraph(data)
 
 	//Community name, if selected
 	if(communityName.length != 0) {
-		infographContent += "<li><h5 class='title'>Comunidad nativa</h5>";
+		infographContent += "<li><h5 class='title'>Comunidad nativa <small>(" + communityName.length + " selected)</small></h5>";
 		infographContent += "<span class='information-content text-success'>"+ communityName.join(", ") +"</span></li>";
 	}
 
