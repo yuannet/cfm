@@ -72,7 +72,7 @@ window.VARS = {
 		lookup: "json/lookup.json",
 	},
 	BASE: [
-		{ dummy: true },  //only dummy object. 
+		{ dummy: true },  //only dummy object dedicated to fill first slot. DO NOT REMOVE!
 		{
 			url: "json/Limite_Ucayali.json", 
 			label: "", 
@@ -84,7 +84,6 @@ window.VARS = {
 			label: "Gestionadas por el Estado", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-1" },
 			fnOnEachFeature: function (feature, layer) { 
-				//layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
 				var data = [
 					{ 'label': 'Categoría', 'value': feature.properties.ANP_CATE },
 					{ 'label': 'Nombre', 'value': feature.properties.ANP_NOMB },
@@ -100,7 +99,6 @@ window.VARS = {
 			label: "Cogestionadas por el Estado y las Comunidades", 
 			style: { color: "#28a745", weight: 1, opacity: 0.4, fillOpacity: 0.4, className: "base-layer-2" },
 			fnOnEachFeature: function (feature, layer) { 
-				//layer.bindPopup(feature.properties.ANP_CATE + ' ' + feature.properties.ANP_NOMB); 
 				var data = [
 					{ 'label': 'Categoría', 'value': feature.properties.ANP_CATE },
 					{ 'label': 'Nombre', 'value': feature.properties.ANP_NOMB },
@@ -116,7 +114,6 @@ window.VARS = {
 			label: "Reservas Territoriales Indígenas", 
 			style: { color: "#dc3545", weight: 1, opacity: 0.4, fillOpacity: 0.1, className: "base-layer-3" },
 			fnOnEachFeature: function (feature, layer) { 
-				//layer.bindPopup(feature.properties.NOMBRES); 
 				var data = [
 					{ 'label': 'Nombre', 'value': feature.properties.NOMBRES },
 					{ 'label': 'Área (ha)', 'value': feature.properties.HECTARES },
@@ -180,8 +177,8 @@ window.VARS = {
 
 window.SPIN = {
 	isLoading: false,
-	show: function() { $("#myModal").removeClass("fade"); $("#myModal").modal("show"); this.isLoading = true; },
-	hide: function() { $("#myModal").addClass("fade"); $("#myModal").modal("hide"); this.isLoading = false; },
+	show: function() { $("#myspin").removeClass("fade"); $("#myspin").modal("show"); this.isLoading = true; },
+	hide: function() { $("#myspin").addClass("fade"); $("#myspin").modal("hide"); this.isLoading = false; },
 	content: function(html) { $("#spinner-text").html(html); },
 	reset: function() { $("#spinner-text").html("Loading..."); this.isLoading = false; }
 }
