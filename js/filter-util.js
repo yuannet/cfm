@@ -100,6 +100,9 @@ $("#btnreset").on("click", function() {
 		v.bindPopup(popupContent, { minWidth : 200 });
 	});
 
+	//re-generate infographic control
+	PopulateGraph(baseLayers[baseLayerDataIndex].getGeojson());
+
 	//set filter mode to false
 	filterMode = false;
 });
