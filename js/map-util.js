@@ -255,7 +255,8 @@ function PopulateGraph(data)
 			});
 			tmpComNames = [...new Set([...tmpComNames])];
 
-			infoComHeader += "<br><small>(filtered by " + mainFilterLabel + ": " + mainFilterValue.join(", ") + ")</small>";
+			infoComHeader += "<br><small>(" + tmpComNames.length + " selected, ";
+			infoComHeader += "filtered by " + mainFilterLabel + ": " + mainFilterValue.join(", ") + ")</small>";
 			infoComContent = tmpComNames.join(", ");
 		}
 		else {
