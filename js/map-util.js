@@ -13,6 +13,8 @@ var legendControl = null;
 var filteredData = null;
 var baseLayerDataIndex = 0;
 var baseLayerLegendControl = null;
+var mainFilterLabel = "";
+var mainFilterValue = null;
 
 function GetPopupContent(feature) {
 	function FormatValue(val,dec) {
@@ -86,8 +88,13 @@ function PopulateFilteredLayer(attr)
 
 	var tmpLayers = [];
 	var tmpSubLegend = [];
+	var tmpFilterValues = [];
 
 	var options = $(id).find("option:selected");
+
+	if(options.length != 0) {
+		mainFilterLabel = attr.desc;
+	}
 
 	$.each(options, function(i, v) {
 		var tmpColor = (layerColorIndex < VARS.layerColor.length) ? VARS.layerColor[layerColorIndex++] : randomColor();
@@ -119,6 +126,7 @@ function PopulateFilteredLayer(attr)
 		tmpLayers.push(tmpgroup);
 
 		if(id == "#native-community") communityName.push(fVal);
+		tmpFilterValues.push(fVal);
 
 	});
 
@@ -133,6 +141,10 @@ function PopulateFilteredLayer(attr)
 		legendOverlay.push({ label: attr.desc, children: tmpSubLegend, selectAllCheckbox: true });
 	}
 
+	if(tmpFilterValues.legend != 0 && mainFilterValue.length == 0) {
+		mainFilterValue = [...tmpFilterValues]; 
+	}
+
 	return tmpLayers;
 }
 
@@ -143,6 +155,8 @@ function GetFilteredLayers(data)
 	legendOverlay = [];
 	layerColorIndex = 0;
 	communityName = [];
+	mainFilterLabel = "";
+	mainFilterValue = [];
 
 	if(!filterMode) return [];
 
@@ -224,10 +238,33 @@ function PopulateGraph(data)
 	infographContent += "<li><h4 class='title'>Clasificación de derechos sobre la tierra en las comunidades seleccionadas</h4></li>";
 
 	//Community name, if selected
+	var infoComHeader = "";
+	var infoComContent = "";
+
 	if(communityName.length != 0) {
-		infographContent += "<li><h5 class='title'>Comunidad nativa <small>(" + communityName.length + " selected)</small></h5>";
-		infographContent += "<span class='information-content text-success'>"+ communityName.join(", ") +"</span></li>";
+		infoComHeader = " <small>(" + communityName.length + " selected)</small>";
+		infoComContent = communityName.join(", ");
+		// infographContent += "<li><h5 class='title'>Comunidad nativa <small>(" + communityName.length + " selected)</small></h5>";
+		// infographContent += "<span class='information-content text-success'>"+ communityName.join(", ") +"</span></li>";
 	}
+	else {
+		if(mainFilterLabel != "") {
+			var tmpComNames = jsonData.map(function(data) {
+				console.log(data.properties.Com_name);
+				return data.properties.Com_name;
+			});
+			tmpComNames = [...new Set([...tmpComNames])];
+
+			infoComHeader += "<br><small>(filtered by " + mainFilterLabel + ": " + mainFilterValue.join(", ") + ")</small>";
+			infoComContent = tmpComNames.join(", ");
+		}
+		else {
+			infoComHeader = "";
+			infoComContent = "All communities in Ucayali";
+		}
+	}
+	infographContent += "<li><h5 class='title'>Comunidad nativa" + infoComHeader + "</h5>";
+	infographContent += "<span class='information-content text-success'>" + infoComContent + "</span></li>";
 
 	// infographContent += "<li><h5 class='title'>Población</h5><span class='information-content'>"+ UTIL.formatNum(sumPopulation,0) +"</span></li>";
 	infographContent += "<li><h5 class='title'>Área demarcada</h5><span class='information-content text-success'>"+ UTIL.formatNum(sumDemar) +"</span></li>";
@@ -346,6 +383,11 @@ function ResetFilteredLayer()
 
 		filteredLayers = [];
 	}
+
+	mainFilterLabel = "";
+	mainFilterValue = [];
+	communityName = [];
+	filteredIDs = [];
 }
 
 function PopulateMap(data)
