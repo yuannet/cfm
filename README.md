@@ -8,6 +8,11 @@ The application is using javascript libraries. THe core library is leaflter js
 4. D3js topojson is being use to extend Leaflet to create a GeoJSON layer from a TopoJSON file
 
 
+Why Topojson?
+------------
+The primary advantage of TopoJSON is size. By eliminating redundancy and using a more efficent fixed-precision integer encoding of coordinates, TopoJSON files are often an order of magnitude smaller than GeoJSON files.
+
+
 Documentation
 -------------
 1. Bootstrap multiselect documentation: http://davidstutz.de/bootstrap-multiselect/<br/>
