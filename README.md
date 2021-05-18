@@ -1,4 +1,4 @@
-Installation
+Libraries
 ------------
 
 The application is using javascript libraries. THe core library is leaflter js
