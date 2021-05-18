@@ -1,7 +1,7 @@
 Installation
 ------------
 
-* The application is using javascript libraries
+The application is using javascript libraries. THe core library is leaflter js
 1. Chart.js plugin being used on inforagraphic. This library is being used to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js 
 2. Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps. 
 3. Bootstrap multiselect is being used on filter and searching on sidebar
