@@ -10,10 +10,10 @@ The application is using javascript libraries. THe core library is leaflter js
 
 Documentation
 -------------
-1.Bootstrap multiselect documentation: http://davidstutz.de/bootstrap-multiselect/<br/>
+1. Bootstrap multiselect documentation: http://davidstutz.de/bootstrap-multiselect/<br/>
 2. Leflet js documentation: https://leafletjs.com/reference-1.7.1.html <br/>
 3. Chart.js usage can be find on the following URL: https://github.com/emn178/chartjs-plugin-labels<br/>
-4. topojson documentation: http://d3js.org/topojson.v1.min.js<br/>
+4. Topojson documentation: http://d3js.org/topojson.v1.min.js<br/>
 
 
 Files
